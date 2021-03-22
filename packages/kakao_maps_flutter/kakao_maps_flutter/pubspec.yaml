@@ -1,0 +1,34 @@
+name: kakao_maps_flutter
+description: A Flutter plugin for integrating Kakao Maps in iOS and Android applications.
+homepage: https://github.com/clearmaps/plugins/kakao_maps_flutter
+version: 1.0.0+21031201
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_plugin_android_lifecycle: ^2.0.0
+  kakao_maps_flutter_platform_interface:
+    path: ../kakao_maps_flutter_platform_interface
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_driver:
+    sdk: flutter
+  test: ^1.16.0
+  pedantic: ^1.10.0
+  plugin_platform_interface: ^2.0.0
+  stream_transform: ^2.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: io.flutter.plugins.kakaomaps
+        pluginClass: KakaoMapsPlugin
+      ios:
+        pluginClass: FLTKakaoMapsPlugin
+
+environment:
+  sdk: '>=2.12.0-259.9.beta <3.0.0'
+  flutter: ">=1.22.0"
