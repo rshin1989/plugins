@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.overlay.Marker;
@@ -12,13 +12,13 @@ import com.naver.maps.model.BitmapDescriptor;
 class MarkerController implements MarkerOptionsSink {
 
   private final Marker marker;
-  private final String naverMapsMarkerId;
+  private final String kakaoMapsMarkerId;
   private boolean consumeTapEvents;
 
   MarkerController(Marker marker, boolean consumeTapEvents) {
     this.marker = marker;
     this.consumeTapEvents = consumeTapEvents;
-    this.naverMapsMarkerId = Integer.toString(marker.hashCode());
+    this.kakaoMapsMarkerId = Integer.toString(marker.hashCode());
   }
 
   void remove() {
@@ -86,8 +86,8 @@ class MarkerController implements MarkerOptionsSink {
 //    marker.setZIndex(zIndex);
   }
 
-  String getNaverMapsMarkerId() {
-    return naverMapsMarkerId;
+  String getKakaoMapsMarkerId() {
+    return kakaoMapsMarkerId;
   }
 
   boolean consumeTapEvents() {

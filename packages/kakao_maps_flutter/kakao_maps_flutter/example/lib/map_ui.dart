@@ -6,7 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 
 import 'page.dart';
 
@@ -15,7 +15,7 @@ final LatLngBounds sydneyBounds = LatLngBounds(
   northeast: const LatLng(-33.571835, 151.325952),
 );
 
-class MapUiPage extends NaverMapExampleAppPage {
+class MapUiPage extends KakaoMapExampleAppPage {
   MapUiPage() : super(const Icon(Icons.map), 'User interface');
 
   @override
@@ -56,7 +56,7 @@ class MapUiBodyState extends State<MapUiBody> {
   bool _myLocationEnabled = true;
   bool _myTrafficEnabled = false;
   bool _myLocationButtonEnabled = true;
-  late NaverMapController _controller;
+  late KakaoMapController _controller;
   bool _nightMode = false;
 
   @override
@@ -269,7 +269,7 @@ class MapUiBodyState extends State<MapUiBody> {
 
   @override
   Widget build(BuildContext context) {
-    final NaverMap naverMap = NaverMap(
+    final KakaoMap naverMap = KakaoMap(
       onMapCreated: onMapCreated,
       initialCameraPosition: _kInitialPosition,
       compassEnabled: _compassEnabled,
@@ -347,7 +347,7 @@ class MapUiBodyState extends State<MapUiBody> {
     });
   }
 
-  void onMapCreated(NaverMapController controller) {
+  void onMapCreated(KakaoMapController controller) {
     setState(() {
       _controller = controller;
       _isMapCreated = true;

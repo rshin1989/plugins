@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
 import android.app.Activity;
 import android.app.Application.ActivityLifecycleCallbacks;
@@ -28,7 +28,7 @@ public class KakaoMapsPlugin implements FlutterPlugin, ActivityAware {
 
   @Nullable private Lifecycle lifecycle;
 
-  private static final String VIEW_TYPE = "plugins.flutter.io/naver_maps";
+  private static final String VIEW_TYPE = "plugins.flutter.io/kakao_maps";
 
   @SuppressWarnings("deprecation")
   public static void registerWith(
@@ -44,7 +44,7 @@ public class KakaoMapsPlugin implements FlutterPlugin, ActivityAware {
           .platformViewRegistry()
           .registerViewFactory(
               VIEW_TYPE,
-              new NaverMapFactory(
+              new KakaoMapFactory(
                   registrar.messenger(),
                   new LifecycleProvider() {
                     @Override
@@ -57,7 +57,7 @@ public class KakaoMapsPlugin implements FlutterPlugin, ActivityAware {
           .platformViewRegistry()
           .registerViewFactory(
               VIEW_TYPE,
-              new NaverMapFactory(registrar.messenger(), new ProxyLifecycleProvider(activity)));
+              new KakaoMapFactory(registrar.messenger(), new ProxyLifecycleProvider(activity)));
     }
   }
 
@@ -71,7 +71,7 @@ public class KakaoMapsPlugin implements FlutterPlugin, ActivityAware {
         .getPlatformViewRegistry()
         .registerViewFactory(
             VIEW_TYPE,
-            new NaverMapFactory(
+            new KakaoMapFactory(
                 binding.getBinaryMessenger(),
                 new LifecycleProvider() {
                   @Nullable

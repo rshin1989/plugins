@@ -6,11 +6,11 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 
 import 'page.dart';
 
-class PlacePolylinePage extends NaverMapExampleAppPage {
+class PlacePolylinePage extends KakaoMapExampleAppPage {
   PlacePolylinePage() : super(const Icon(Icons.linear_scale), 'Place polyline');
 
   @override
@@ -29,7 +29,7 @@ class PlacePolylineBody extends StatefulWidget {
 class PlacePolylineBodyState extends State<PlacePolylineBody> {
   PlacePolylineBodyState();
 
-  NaverMapController? controller;
+  KakaoMapController? controller;
   Map<PolylineId, Polyline> polylines = <PolylineId, Polyline>{};
   int _polylineIdCounter = 0;
   PolylineId? selectedPolyline;
@@ -76,7 +76,7 @@ class PlacePolylineBodyState extends State<PlacePolylineBody> {
     <PatternItem>[PatternItem.dot, PatternItem.gap(10.0)],
   ];
 
-  void _onMapCreated(NaverMapController controller) {
+  void _onMapCreated(KakaoMapController controller) {
     this.controller = controller;
   }
 
@@ -213,7 +213,7 @@ class PlacePolylineBodyState extends State<PlacePolylineBody> {
           child: SizedBox(
             width: 350.0,
             height: 300.0,
-            child: NaverMap(
+            child: KakaoMap(
               initialCameraPosition: const CameraPosition(
                 target: LatLng(53.1721, -3.5402),
                 zoom: 7.0,

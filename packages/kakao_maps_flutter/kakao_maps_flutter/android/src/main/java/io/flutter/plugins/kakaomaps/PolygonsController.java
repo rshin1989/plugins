@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
-import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.KakaoMap;
 import com.naver.maps.model.Polygon;
 import com.naver.maps.model.PolygonOptions;
 
@@ -16,20 +16,20 @@ import java.util.Map;
 class PolygonsController {
 
   private final Map<String, PolygonController> polygonIdToController;
-  private final Map<String, String> naverMapsPolygonIdToDartPolygonId;
+  private final Map<String, String> kakaoMapsPolygonIdToDartPolygonId;
   private final MethodChannel methodChannel;
   private final float density;
-  private NaverMap naverMap;
+  private KakaoMap kakaoMap;
 
   PolygonsController(MethodChannel methodChannel, float density) {
     this.polygonIdToController = new HashMap<>();
-    this.naverMapsPolygonIdToDartPolygonId = new HashMap<>();
+    this.kakaoMapsPolygonIdToDartPolygonId = new HashMap<>();
     this.methodChannel = methodChannel;
     this.density = density;
   }
 
-  void setNaverMap(NaverMap naverMap) {
-    this.naverMap = naverMap;
+  void setKakaoMap(KakaoMap kakaoMap) {
+    this.kakaoMap = kakaoMap;
   }
 
   void addPolygons(List<Object> polygonsToAdd) {
@@ -61,13 +61,13 @@ class PolygonsController {
 //      final PolygonController polygonController = polygonIdToController.remove(polygonId);
 //      if (polygonController != null) {
 //        polygonController.remove();
-//        naverMapsPolygonIdToDartPolygonId.remove(polygonController.getNaverMapsPolygonId());
+//        kakaoMapsPolygonIdToDartPolygonId.remove(polygonController.getKakaoMapsPolygonId());
 //      }
 //    }
   }
 
   boolean onPolygonTap(String googlePolygonId) {
-    String polygonId = naverMapsPolygonIdToDartPolygonId.get(googlePolygonId);
+    String polygonId = kakaoMapsPolygonIdToDartPolygonId.get(googlePolygonId);
     if (polygonId == null) {
       return false;
     }
@@ -92,10 +92,10 @@ class PolygonsController {
   private void addPolygon(
       String polygonId, PolygonOptions polygonOptions, boolean consumeTapEvents) {
     //TODO("addPolygon")
-//    final Polygon polygon = naverMap.addPolygon(polygonOptions);
+//    final Polygon polygon = kakaoMap.addPolygon(polygonOptions);
 //    PolygonController controller = new PolygonController(polygon, consumeTapEvents, density);
 //    polygonIdToController.put(polygonId, controller);
-//    naverMapsPolygonIdToDartPolygonId.put(polygon.getId(), polygonId);
+//    kakaoMapsPolygonIdToDartPolygonId.put(polygon.getId(), polygonId);
   }
 
   private void changePolygon(Object polygon) {

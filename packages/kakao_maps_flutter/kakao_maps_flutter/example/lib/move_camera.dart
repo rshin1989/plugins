@@ -5,11 +5,11 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 
 import 'page.dart';
 
-class MoveCameraPage extends NaverMapExampleAppPage {
+class MoveCameraPage extends KakaoMapExampleAppPage {
   MoveCameraPage() : super(const Icon(Icons.map), 'Camera control');
 
   @override
@@ -25,9 +25,9 @@ class MoveCamera extends StatefulWidget {
 }
 
 class MoveCameraState extends State<MoveCamera> {
-  NaverMapController? mapController;
+  KakaoMapController? mapController;
 
-  void _onMapCreated(NaverMapController controller) {
+  void _onMapCreated(KakaoMapController controller) {
     mapController = controller;
   }
 
@@ -41,7 +41,7 @@ class MoveCameraState extends State<MoveCamera> {
           child: SizedBox(
             width: 300.0,
             height: 200.0,
-            child: NaverMap(
+            child: KakaoMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition:
                   const CameraPosition(target: LatLng(0.0, 0.0)),

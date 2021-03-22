@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -295,7 +295,7 @@ class Convert {
     return (String) o;
   }
 
-  static void interpretNaverMapOptions(Object o, NaverMapOptionsSink sink) {
+  static void interpretKakaoMapOptions(Object o, KakaoMapOptionsSink sink) {
     final Map<?, ?> data = toMap(o);
     final Object cameraTargetBounds = data.get("cameraTargetBounds");
     if (cameraTargetBounds != null) {

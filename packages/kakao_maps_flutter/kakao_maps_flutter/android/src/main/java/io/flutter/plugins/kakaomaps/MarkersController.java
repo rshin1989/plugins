@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
 import android.util.Log;
 
 import com.naver.maps.geometry.LatLng;
-import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.KakaoMap;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.model.MarkerOptions;
 
@@ -20,18 +20,18 @@ import java.util.Map;
 class MarkersController {
 
     private final Map<String, MarkerController> markerIdToController;
-    private final Map<String, String> naverMapsMarkerIdToDartMarkerId;
+    private final Map<String, String> kakaoMapsMarkerIdToDartMarkerId;
     private final MethodChannel methodChannel;
-    private NaverMap naverMap;
+    private KakaoMap kakaoMap;
 
     MarkersController(MethodChannel methodChannel) {
         this.markerIdToController = new HashMap<>();
-        this.naverMapsMarkerIdToDartMarkerId = new HashMap<>();
+        this.kakaoMapsMarkerIdToDartMarkerId = new HashMap<>();
         this.methodChannel = methodChannel;
     }
 
-    void setNaverMap(NaverMap naverMap) {
-        this.naverMap = naverMap;
+    void setKakaoMap(KakaoMap kakaoMap) {
+        this.kakaoMap = kakaoMap;
     }
 
     void addMarkers(List<Object> markersToAdd) {
@@ -62,7 +62,7 @@ class MarkersController {
             final MarkerController markerController = markerIdToController.remove(markerId);
             if (markerController != null) {
                 markerController.remove();
-                naverMapsMarkerIdToDartMarkerId.remove(markerController.getNaverMapsMarkerId());
+                kakaoMapsMarkerIdToDartMarkerId.remove(markerController.getKakaoMapsMarkerId());
             }
         }
     }
@@ -97,7 +97,7 @@ class MarkersController {
     }
 
     boolean onMarkerTap(String googleMarkerId) {
-        String markerId = naverMapsMarkerIdToDartMarkerId.get(googleMarkerId);
+        String markerId = kakaoMapsMarkerIdToDartMarkerId.get(googleMarkerId);
         if (markerId == null) {
             return false;
         }
@@ -110,7 +110,7 @@ class MarkersController {
     }
 
     void onMarkerDragEnd(String googleMarkerId, LatLng latLng) {
-        String markerId = naverMapsMarkerIdToDartMarkerId.get(googleMarkerId);
+        String markerId = kakaoMapsMarkerIdToDartMarkerId.get(googleMarkerId);
         if (markerId == null) {
             return;
         }
@@ -121,7 +121,7 @@ class MarkersController {
     }
 
     void onInfoWindowTap(String googleMarkerId) {
-        String markerId = naverMapsMarkerIdToDartMarkerId.get(googleMarkerId);
+        String markerId = kakaoMapsMarkerIdToDartMarkerId.get(googleMarkerId);
         if (markerId == null) {
             return;
         }
@@ -143,12 +143,12 @@ class MarkersController {
 
         final Marker marker = new Marker();
         marker.setPosition(markerOptions.getPosition());
-        marker.setMap(naverMap);
+        marker.setMap(kakaoMap);
 
         String naverMarkerId = Integer.toString(marker.hashCode());
         MarkerController controller = new MarkerController(marker, consumeTapEvents);
         markerIdToController.put(markerId, controller);
-        naverMapsMarkerIdToDartMarkerId.put(naverMarkerId, markerId);
+        kakaoMapsMarkerIdToDartMarkerId.put(naverMarkerId, markerId);
         marker.setOnClickListener(overlay -> onMarkerTap(naverMarkerId));
     }
 

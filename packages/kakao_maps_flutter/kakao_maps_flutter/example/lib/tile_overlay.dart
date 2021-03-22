@@ -4,15 +4,16 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'dart:collection';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 
 import 'page.dart';
 
-class TileOverlayPage extends NaverMapExampleAppPage {
+class TileOverlayPage extends KakaoMapExampleAppPage {
   TileOverlayPage() : super(const Icon(Icons.map), 'Tile overlay');
 
   @override
@@ -31,10 +32,10 @@ class TileOverlayBody extends StatefulWidget {
 class TileOverlayBodyState extends State<TileOverlayBody> {
   TileOverlayBodyState();
 
-  NaverMapController? controller;
+  KakaoMapController? controller;
   TileOverlay? _tileOverlay;
 
-  void _onMapCreated(NaverMapController controller) {
+  void _onMapCreated(KakaoMapController controller) {
     this.controller = controller;
   }
 
@@ -79,7 +80,7 @@ class TileOverlayBodyState extends State<TileOverlayBody> {
           child: SizedBox(
             width: 350.0,
             height: 300.0,
-            child: NaverMap(
+            child: KakaoMap(
               initialCameraPosition: const CameraPosition(
                 target: LatLng(59.935460, 30.325177),
                 zoom: 7.0,

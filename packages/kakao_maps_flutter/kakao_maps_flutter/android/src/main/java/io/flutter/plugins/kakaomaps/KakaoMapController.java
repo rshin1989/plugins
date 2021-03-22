@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -28,8 +28,8 @@ import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.MapView;
-import com.naver.maps.map.NaverMap;
-import com.naver.maps.map.NaverMapOptions;
+import com.naver.maps.map.KakaoMap;
+import com.naver.maps.map.KakaoMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.Symbol;
 import com.naver.maps.map.indoor.IndoorSelection;
@@ -50,23 +50,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Controller of a single NaverMaps MapView instance. */
+/** Controller of a single KakaoMaps MapView instance. */
 final class KakaoMapController
     implements DefaultLifecycleObserver,
         ActivityPluginBinding.OnSaveInstanceStateListener,
-        NaverMapOptionsSink,
+        KakaoMapOptionsSink,
         MethodChannel.MethodCallHandler,
         OnMapReadyCallback,
-        NaverMapListener,
+        KakaoMapListener,
         MapWrapperListener,
         PlatformView {
 
-  private static final String TAG = "NaverMapController";
+  private static final String TAG = "KakaoMapController";
   private final int id;
   private final MethodChannel methodChannel;
-  private final NaverMapOptions options;
+  private final KakaoMapOptions options;
   @Nullable private MapView mapView;
-  private NaverMap naverMap;
+  private KakaoMap kakaoMap;
   private boolean trackCameraPosition = false;
   private boolean myLocationEnabled = false;
   private boolean myLocationButtonEnabled = false;
@@ -95,7 +95,7 @@ final class KakaoMapController
       Context context,
       BinaryMessenger binaryMessenger,
       LifecycleProvider lifecycleProvider,
-      NaverMapOptions options) {
+      KakaoMapOptions options) {
     this.id = id;
     this.context = context;
     this.options = options;
@@ -122,37 +122,37 @@ final class KakaoMapController
   }
 
   private void moveCamera(CameraUpdate cameraUpdate) {
-    naverMap.moveCamera(cameraUpdate);
+    kakaoMap.moveCamera(cameraUpdate);
   }
 
   private void animateCamera(CameraUpdate cameraUpdate) {
     cameraUpdate.animate(CameraAnimation.Easing);
-    naverMap.moveCamera(cameraUpdate);
+    kakaoMap.moveCamera(cameraUpdate);
   }
 
   private CameraPosition getCameraPosition() {
-    return trackCameraPosition ? naverMap.getCameraPosition() : null;
+    return trackCameraPosition ? kakaoMap.getCameraPosition() : null;
   }
 
   @Override
-  public void onMapReady(NaverMap naverMap) {
-    this.naverMap = naverMap;
-    this.naverMap.setIndoorEnabled(this.indoorEnabled);
-    this.naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_TRAFFIC, this.trafficEnabled);
-    this.naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_BUILDING, this.buildingsEnabled);
+  public void onMapReady(KakaoMap kakaoMap) {
+    this.kakaoMap = kakaoMap;
+    this.kakaoMap.setIndoorEnabled(this.indoorEnabled);
+    this.kakaoMap.setLayerGroupEnabled(KakaoMap.LAYER_GROUP_TRAFFIC, this.trafficEnabled);
+    this.kakaoMap.setLayerGroupEnabled(KakaoMap.LAYER_GROUP_BUILDING, this.buildingsEnabled);
     //TODO("마커의 정보창을 출력해주는 형태만 지원한다")
-    //naverMap.setOnInfoWindowClickListener(this);
+    //kakaoMap.setOnInfoWindowClickListener(this);
     if (mapReadyResult != null) {
       mapReadyResult.success(null);
       mapReadyResult = null;
     }
-    setNaverMapListener(this);
+    setKakaoMapListener(this);
     updateMyLocationSettings();
-    markersController.setNaverMap(naverMap);
-    polygonsController.setNaverMap(naverMap);
-    polylinesController.setNaverMap(naverMap);
-    circlesController.setNaverMap(naverMap);
-    tileOverlaysController.setNaverMap(naverMap);
+    markersController.setKakaoMap(kakaoMap);
+    polygonsController.setKakaoMap(kakaoMap);
+    polylinesController.setKakaoMap(kakaoMap);
+    circlesController.setKakaoMap(kakaoMap);
+    tileOverlaysController.setKakaoMap(kakaoMap);
     updateInitialMarkers();
     updateInitialPolygons();
     updateInitialPolylines();
@@ -162,10 +162,10 @@ final class KakaoMapController
 
   @Override
   public void onMethodCall(MethodCall call, MethodChannel.Result result) {
-    Log.d("NaverMapController", "[onMethodCall] ----------- " + call.method);
+    Log.d("KakaoMapController", "[onMethodCall] ----------- " + call.method);
     switch (call.method) {
       case "map#waitForMap":
-        if (naverMap != null) {
+        if (kakaoMap != null) {
           result.success(null);
           return;
         }
@@ -173,20 +173,20 @@ final class KakaoMapController
         break;
       case "map#update":
         {
-          Convert.interpretNaverMapOptions(call.argument("options"), this);
+          Convert.interpretKakaoMapOptions(call.argument("options"), this);
           result.success(Convert.cameraPositionToJson(getCameraPosition()));
           break;
         }
       case "map#getVisibleRegion":
         {
-          if (naverMap != null) {
+          if (kakaoMap != null) {
               //TODO("map#getVisibleRegion")
-//            LatLngBounds latLngBounds = naverMap.getProjection().getVisibleRegion().latLngBounds;
+//            LatLngBounds latLngBounds = kakaoMap.getProjection().getVisibleRegion().latLngBounds;
 //            result.success(Convert.latlngBoundsToJson(latLngBounds));
               result.success(null);
           } else {
             result.error(
-                "NaverMap uninitialized",
+                "KakaoMap uninitialized",
                 "getVisibleRegion called prior to map initialization",
                 null);
           }
@@ -194,13 +194,13 @@ final class KakaoMapController
         }
       case "map#getScreenCoordinate":
         {
-          if (naverMap != null) {
+          if (kakaoMap != null) {
             LatLng latLng = Convert.toLatLng(call.arguments);
-            PointF screenLocation = naverMap.getProjection().toScreenLocation(latLng);
+            PointF screenLocation = kakaoMap.getProjection().toScreenLocation(latLng);
             result.success(Convert.pointToJson(screenLocation));
           } else {
             result.error(
-                "NaverMap uninitialized",
+                "KakaoMap uninitialized",
                 "getScreenCoordinate called prior to map initialization",
                 null);
           }
@@ -208,22 +208,22 @@ final class KakaoMapController
         }
       case "map#getLatLng":
         {
-          if (naverMap != null) {
+          if (kakaoMap != null) {
             PointF point = Convert.toPoint(call.arguments);
-            LatLng latLng = naverMap.getProjection().fromScreenLocation(point);
+            LatLng latLng = kakaoMap.getProjection().fromScreenLocation(point);
             result.success(Convert.latLngToJson(latLng));
           } else {
             result.error(
-                "NaverMap uninitialized", "getLatLng called prior to map initialization", null);
+                "KakaoMap uninitialized", "getLatLng called prior to map initialization", null);
           }
           break;
         }
       case "map#takeSnapshot":
         {
-          if (naverMap != null) {
+          if (kakaoMap != null) {
             final MethodChannel.Result _result = result;
-            naverMap.takeSnapshot(
-                new NaverMap.SnapshotReadyCallback() {
+            kakaoMap.takeSnapshot(
+                new KakaoMap.SnapshotReadyCallback() {
                   @Override
                   public void onSnapshotReady(Bitmap bitmap) {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -236,7 +236,7 @@ final class KakaoMapController
                   }
                 });
           } else {
-            result.error("NaverMap uninitialized", "takeSnapshot", null);
+            result.error("KakaoMap uninitialized", "takeSnapshot", null);
           }
           break;
         }
@@ -320,26 +320,26 @@ final class KakaoMapController
         }
       case "map#isCompassEnabled":
         {
-          result.success(naverMap.getUiSettings().isCompassEnabled());
+          result.success(kakaoMap.getUiSettings().isCompassEnabled());
           break;
         }
       case "map#isMapToolbarEnabled":
         {
             //TODO("map#isMapToolbarEnabled")
-//          result.success(naverMap.getUiSettings().isMapToolbarEnabled());
+//          result.success(kakaoMap.getUiSettings().isMapToolbarEnabled());
           break;
         }
       case "map#getMinMaxZoomLevels":
         {
           List<Double> zoomLevels = new ArrayList<>(2);
-          zoomLevels.add(naverMap.getMinZoom());
-          zoomLevels.add(naverMap.getMaxZoom());
+          zoomLevels.add(kakaoMap.getMinZoom());
+          zoomLevels.add(kakaoMap.getMaxZoom());
           result.success(zoomLevels);
           break;
         }
       case "map#isZoomGesturesEnabled":
         {
-          result.success(naverMap.getUiSettings().isZoomGesturesEnabled());
+          result.success(kakaoMap.getUiSettings().isZoomGesturesEnabled());
           break;
         }
       case "map#isLiteModeEnabled":
@@ -349,42 +349,42 @@ final class KakaoMapController
         }
       case "map#isZoomControlsEnabled":
         {
-          result.success(naverMap.getUiSettings().isZoomControlEnabled());
+          result.success(kakaoMap.getUiSettings().isZoomControlEnabled());
           break;
         }
       case "map#isScrollGesturesEnabled":
         {
-          result.success(naverMap.getUiSettings().isScrollGesturesEnabled());
+          result.success(kakaoMap.getUiSettings().isScrollGesturesEnabled());
           break;
         }
       case "map#isTiltGesturesEnabled":
         {
-          result.success(naverMap.getUiSettings().isTiltGesturesEnabled());
+          result.success(kakaoMap.getUiSettings().isTiltGesturesEnabled());
           break;
         }
       case "map#isRotateGesturesEnabled":
         {
-          result.success(naverMap.getUiSettings().isRotateGesturesEnabled());
+          result.success(kakaoMap.getUiSettings().isRotateGesturesEnabled());
           break;
         }
       case "map#isMyLocationButtonEnabled":
         {
-          result.success(naverMap.getUiSettings().isLocationButtonEnabled());
+          result.success(kakaoMap.getUiSettings().isLocationButtonEnabled());
           break;
         }
       case "map#isTrafficEnabled":
         {
-          result.success(naverMap.isLayerGroupEnabled(NaverMap.LAYER_GROUP_TRAFFIC));
+          result.success(kakaoMap.isLayerGroupEnabled(KakaoMap.LAYER_GROUP_TRAFFIC));
           break;
         }
       case "map#isBuildingsEnabled":
         {
-          result.success(naverMap.isLayerGroupEnabled(NaverMap.LAYER_GROUP_BUILDING));
+          result.success(kakaoMap.isLayerGroupEnabled(KakaoMap.LAYER_GROUP_BUILDING));
           break;
         }
       case "map#getZoomLevel":
         {
-          result.success(naverMap.getCameraPosition().zoom);
+          result.success(kakaoMap.getCameraPosition().zoom);
           break;
         }
       case "map#setStyle":
@@ -393,9 +393,9 @@ final class KakaoMapController
 //          String mapStyle = (String) call.arguments;
 //          boolean mapStyleSet;
 //          if (mapStyle == null) {
-//            mapStyleSet = naverMap.setMapStyle(null);
+//            mapStyleSet = kakaoMap.setMapStyle(null);
 //          } else {
-//            mapStyleSet = naverMap.setMapStyle(new MapStyleOptions(mapStyle));
+//            mapStyleSet = kakaoMap.setMapStyle(new MapStyleOptions(mapStyle));
 //          }
 //          ArrayList<Object> mapStyleResult = new ArrayList<>(2);
 //          mapStyleResult.add(mapStyleSet);
@@ -469,7 +469,7 @@ final class KakaoMapController
       return;
     }
     final Map<String, Object> arguments = new HashMap<>(2);
-    arguments.put("position", Convert.cameraPositionToJson(naverMap.getCameraPosition()));
+    arguments.put("position", Convert.cameraPositionToJson(kakaoMap.getCameraPosition()));
     methodChannel.invokeMethod("camera#onMove", arguments);
   }
 
@@ -516,7 +516,7 @@ final class KakaoMapController
     }
     disposed = true;
     methodChannel.setMethodCallHandler(null);
-    setNaverMapListener(null);
+    setKakaoMapListener(null);
     destroyMapViewIfNecessary();
     Lifecycle lifecycle = lifecycleProvider.getLifecycle();
     if (lifecycle != null) {
@@ -524,30 +524,30 @@ final class KakaoMapController
     }
   }
 
-  private void setNaverMapListener(@Nullable NaverMapListener listener) {
+  private void setKakaoMapListener(@Nullable KakaoMapListener listener) {
     if (listener == null) {
-      naverMap.removeOnCameraChangeListener(this);
-      naverMap.removeOnCameraIdleListener(this);
-      naverMap.removeOnIndoorSelectionChangeListener(this);
-      naverMap.removeOnLocationChangeListener(this);
-      naverMap.removeOnOptionChangeListener(this);
-      naverMap.setOnMapClickListener(null);
-      naverMap.setOnMapDoubleTapListener(null);
-      naverMap.setOnMapLongClickListener(null);
-      naverMap.setOnMapTwoFingerTapListener(null);
-      naverMap.setOnSymbolClickListener(null);
+      kakaoMap.removeOnCameraChangeListener(this);
+      kakaoMap.removeOnCameraIdleListener(this);
+      kakaoMap.removeOnIndoorSelectionChangeListener(this);
+      kakaoMap.removeOnLocationChangeListener(this);
+      kakaoMap.removeOnOptionChangeListener(this);
+      kakaoMap.setOnMapClickListener(null);
+      kakaoMap.setOnMapDoubleTapListener(null);
+      kakaoMap.setOnMapLongClickListener(null);
+      kakaoMap.setOnMapTwoFingerTapListener(null);
+      kakaoMap.setOnSymbolClickListener(null);
       return;
     }
-    naverMap.addOnCameraChangeListener(this);
-    naverMap.addOnCameraIdleListener(this);
-    naverMap.addOnIndoorSelectionChangeListener(this);
-    naverMap.addOnLocationChangeListener(this);
-    naverMap.addOnOptionChangeListener(this);
-    naverMap.setOnMapClickListener(listener);
-    naverMap.setOnMapDoubleTapListener(listener);
-    naverMap.setOnMapLongClickListener(listener);
-    naverMap.setOnMapTwoFingerTapListener(listener);
-    naverMap.setOnSymbolClickListener(listener);
+    kakaoMap.addOnCameraChangeListener(this);
+    kakaoMap.addOnCameraIdleListener(this);
+    kakaoMap.addOnIndoorSelectionChangeListener(this);
+    kakaoMap.addOnLocationChangeListener(this);
+    kakaoMap.addOnOptionChangeListener(this);
+    kakaoMap.setOnMapClickListener(listener);
+    kakaoMap.setOnMapDoubleTapListener(listener);
+    kakaoMap.setOnMapLongClickListener(listener);
+    kakaoMap.setOnMapTwoFingerTapListener(listener);
+    kakaoMap.setOnSymbolClickListener(listener);
   }
 
   // @Override
@@ -631,49 +631,49 @@ final class KakaoMapController
     mapView.onSaveInstanceState(bundle);
   }
 
-  // NaverMapOptionsSink methods
+  // KakaoMapOptionsSink methods
 
   @Override
   public void setCameraTargetBounds(LatLngBounds bounds) {
     //TODO("setCameraTargetBounds")
-//    naverMap.setLatLngBoundsForCameraTarget(bounds);
+//    kakaoMap.setLatLngBoundsForCameraTarget(bounds);
   }
 
   @Override
   public void setCompassEnabled(boolean compassEnabled) {
-    naverMap.getUiSettings().setCompassEnabled(compassEnabled);
+    kakaoMap.getUiSettings().setCompassEnabled(compassEnabled);
   }
 
   @Override
   public void setMapToolbarEnabled(boolean mapToolbarEnabled) {
     //TODO("setMapToolbarEnabled")
-//    naverMap.getUiSettings().setMapToolbarEnabled(mapToolbarEnabled);
+//    kakaoMap.getUiSettings().setMapToolbarEnabled(mapToolbarEnabled);
   }
 
   @Override
   public void setMapType(int mapType) {
-    NaverMap.MapType naverMapType;
+    KakaoMap.MapType kakaoMapType;
     switch (mapType) {
       case 0:
-        naverMapType = NaverMap.MapType.Basic;
+        kakaoMapType = KakaoMap.MapType.Basic;
         break;
       case 1:
-        naverMapType = NaverMap.MapType.Navi;
+        kakaoMapType = KakaoMap.MapType.Navi;
         break;
       case 2:
-        naverMapType = NaverMap.MapType.Satellite;
+        kakaoMapType = KakaoMap.MapType.Satellite;
         break;
       case 3:
-        naverMapType = NaverMap.MapType.Hybrid;
+        kakaoMapType = KakaoMap.MapType.Hybrid;
         break;
       case 4:
-        naverMapType = NaverMap.MapType.Terrain;
+        kakaoMapType = KakaoMap.MapType.Terrain;
         break;
       default:
-        naverMapType = NaverMap.MapType.None;
+        kakaoMapType = KakaoMap.MapType.None;
         break;
     }
-    naverMap.setMapType(naverMapType);
+    kakaoMap.setMapType(kakaoMapType);
   }
 
   @Override
@@ -683,33 +683,33 @@ final class KakaoMapController
 
   @Override
   public void setRotateGesturesEnabled(boolean rotateGesturesEnabled) {
-    naverMap.getUiSettings().setRotateGesturesEnabled(rotateGesturesEnabled);
+    kakaoMap.getUiSettings().setRotateGesturesEnabled(rotateGesturesEnabled);
   }
 
   @Override
   public void setScrollGesturesEnabled(boolean scrollGesturesEnabled) {
-    naverMap.getUiSettings().setScrollGesturesEnabled(scrollGesturesEnabled);
+    kakaoMap.getUiSettings().setScrollGesturesEnabled(scrollGesturesEnabled);
   }
 
   @Override
   public void setTiltGesturesEnabled(boolean tiltGesturesEnabled) {
-    naverMap.getUiSettings().setTiltGesturesEnabled(tiltGesturesEnabled);
+    kakaoMap.getUiSettings().setTiltGesturesEnabled(tiltGesturesEnabled);
   }
 
   @Override
   public void setMinMaxZoomPreference(Float min, Float max) {
     if (min != null) {
-      naverMap.setMinZoom(min);
+      kakaoMap.setMinZoom(min);
     }
     if (max != null) {
-      naverMap.setMaxZoom(max);
+      kakaoMap.setMaxZoom(max);
     }
   }
 
   @Override
   public void setPadding(float top, float left, float bottom, float right) {
-    if (naverMap != null) {
-      naverMap.setContentPadding(
+    if (kakaoMap != null) {
+      kakaoMap.setContentPadding(
           (int) (left * density),
           (int) (top * density),
           (int) (right * density),
@@ -719,7 +719,7 @@ final class KakaoMapController
 
   @Override
   public void setZoomGesturesEnabled(boolean zoomGesturesEnabled) {
-    naverMap.getUiSettings().setZoomGesturesEnabled(zoomGesturesEnabled);
+    kakaoMap.getUiSettings().setZoomGesturesEnabled(zoomGesturesEnabled);
   }
 
   /** This call will have no effect on already created map */
@@ -734,7 +734,7 @@ final class KakaoMapController
       return;
     }
     this.myLocationEnabled = myLocationEnabled;
-    if (naverMap != null) {
+    if (kakaoMap != null) {
       updateMyLocationSettings();
     }
   }
@@ -745,7 +745,7 @@ final class KakaoMapController
       return;
     }
     this.myLocationButtonEnabled = myLocationButtonEnabled;
-    if (naverMap != null) {
+    if (kakaoMap != null) {
       updateMyLocationSettings();
     }
   }
@@ -756,8 +756,8 @@ final class KakaoMapController
       return;
     }
     this.zoomControlsEnabled = zoomControlsEnabled;
-    if (naverMap != null) {
-      naverMap.getUiSettings().setZoomControlEnabled(zoomControlsEnabled);
+    if (kakaoMap != null) {
+      kakaoMap.getUiSettings().setZoomControlEnabled(zoomControlsEnabled);
     }
   }
 
@@ -765,7 +765,7 @@ final class KakaoMapController
   public void setInitialMarkers(Object initialMarkers) {
     ArrayList<?> markers = (ArrayList<?>) initialMarkers;
     this.initialMarkers = markers != null ? new ArrayList<>(markers) : null;
-    if (naverMap != null) {
+    if (kakaoMap != null) {
       updateInitialMarkers();
     }
   }
@@ -778,7 +778,7 @@ final class KakaoMapController
   public void setInitialPolygons(Object initialPolygons) {
     ArrayList<?> polygons = (ArrayList<?>) initialPolygons;
     this.initialPolygons = polygons != null ? new ArrayList<>(polygons) : null;
-    if (naverMap != null) {
+    if (kakaoMap != null) {
       updateInitialPolygons();
     }
   }
@@ -791,7 +791,7 @@ final class KakaoMapController
   public void setInitialPolylines(Object initialPolylines) {
     ArrayList<?> polylines = (ArrayList<?>) initialPolylines;
     this.initialPolylines = polylines != null ? new ArrayList<>(polylines) : null;
-    if (naverMap != null) {
+    if (kakaoMap != null) {
       updateInitialPolylines();
     }
   }
@@ -804,7 +804,7 @@ final class KakaoMapController
   public void setInitialCircles(Object initialCircles) {
     ArrayList<?> circles = (ArrayList<?>) initialCircles;
     this.initialCircles = circles != null ? new ArrayList<>(circles) : null;
-    if (naverMap != null) {
+    if (kakaoMap != null) {
       updateInitialCircles();
     }
   }
@@ -816,7 +816,7 @@ final class KakaoMapController
   @Override
   public void setInitialTileOverlays(List<Map<String, ?>> initialTileOverlays) {
     this.initialTileOverlays = initialTileOverlays;
-    if (naverMap != null) {
+    if (kakaoMap != null) {
       updateInitialTileOverlays();
     }
   }
@@ -833,8 +833,8 @@ final class KakaoMapController
       // Gradle is doing a static check for missing permission and in some configurations will
       // fail the build if the permission is missing. The following disables the Gradle lint.
       //noinspection ResourceType
-//      naverMap.setMyLocationEnabled(myLocationEnabled);
-//      naverMap.getUiSettings().setMyLocationButtonEnabled(myLocationButtonEnabled);
+//      kakaoMap.setMyLocationEnabled(myLocationEnabled);
+//      kakaoMap.getUiSettings().setMyLocationButtonEnabled(myLocationButtonEnabled);
     } else {
       // TODO(amirh): Make the options update fail.
       // https://github.com/flutter/flutter/issues/24327
@@ -871,10 +871,10 @@ final class KakaoMapController
 
   public void setTrafficEnabled(boolean trafficEnabled) {
     this.trafficEnabled = trafficEnabled;
-    if (naverMap == null) {
+    if (kakaoMap == null) {
       return;
     }
-    naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_TRAFFIC, trafficEnabled);
+    kakaoMap.setLayerGroupEnabled(KakaoMap.LAYER_GROUP_TRAFFIC, trafficEnabled);
   }
 
   public void setBuildingsEnabled(boolean buildingsEnabled) {
@@ -885,55 +885,55 @@ final class KakaoMapController
 
   @Override
   public void onCameraChange(int reason, boolean animated) {
-    Log.d("NaverMapController", "[onCameraChange] ------ " + reason + " " + animated);
+    Log.d("KakaoMapController", "[onCameraChange] ------ " + reason + " " + animated);
   }
 
   @Override
   public void onIndoorSelectionChange(@Nullable IndoorSelection indoorSelection) {
-    Log.d("NaverMapController", "[onIndoorSelectionChange] ------ " + indoorSelection.toString());
+    Log.d("KakaoMapController", "[onIndoorSelectionChange] ------ " + indoorSelection.toString());
   }
 
   @Override
   public void onLocationChange(@NonNull Location location) {
-    Log.d("NaverMapController", "[onLocationChange] ------ " + location.toString());
+    Log.d("KakaoMapController", "[onLocationChange] ------ " + location.toString());
   }
 
   @Override
   public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
-    Log.d("NaverMapController", "[onMapClick] ------ " + pointF.toString() + " " + latLng.toString());
+    Log.d("KakaoMapController", "[onMapClick] ------ " + pointF.toString() + " " + latLng.toString());
   }
 
   @Override
   public void onMapLongClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
-    Log.d("NaverMapController", "[onMapLongClick] ------ " + pointF.toString() + " " + latLng.toString());
+    Log.d("KakaoMapController", "[onMapLongClick] ------ " + pointF.toString() + " " + latLng.toString());
   }
 
   @Override
   public boolean onMapDoubleTap(@NonNull PointF pointF, @NonNull LatLng latLng)
   {
-    Log.d("NaverMapController", "[onMapDoubleTap] ------ " + pointF.toString() + " " + latLng.toString());
+    Log.d("KakaoMapController", "[onMapDoubleTap] ------ " + pointF.toString() + " " + latLng.toString());
     return false;
   }
 
   @Override
   public boolean onMapTwoFingerTap(@NonNull PointF pointF, @NonNull LatLng latLng) {
-    Log.d("NaverMapController", "[onMapTwoFingerTap] ------ " + pointF.toString() + " " + latLng.toString());
+    Log.d("KakaoMapController", "[onMapTwoFingerTap] ------ " + pointF.toString() + " " + latLng.toString());
     return false;
   }
 
   @Override
   public void onOptionChange() {
-    Log.d("NaverMapController", "[onOptionChange] ------ ");
+    Log.d("KakaoMapController", "[onOptionChange] ------ ");
   }
 
   @Override
   public boolean onSymbolClick(@NonNull Symbol symbol) {
-    Log.d("NaverMapController", "[onSymbolClick] ------ " + symbol.toString());
+    Log.d("KakaoMapController", "[onSymbolClick] ------ " + symbol.toString());
     return false;
   }
 
   @Override
   public void onSnapshotReady(@NonNull Bitmap bitmap) {
-    Log.d("NaverMapController", "[onSnapshotReady] ------ ");
+    Log.d("KakaoMapController", "[onSnapshotReady] ------ ");
   }
 }

@@ -5,10 +5,10 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 import 'page.dart';
 
-class PaddingPage extends NaverMapExampleAppPage {
+class PaddingPage extends KakaoMapExampleAppPage {
   PaddingPage() : super(const Icon(Icons.map), 'Add padding to the map');
 
   @override
@@ -27,13 +27,13 @@ class MarkerIconsBody extends StatefulWidget {
 const LatLng _kMapCenter = LatLng(52.4478, -3.5402);
 
 class MarkerIconsBodyState extends State<MarkerIconsBody> {
-  NaverMapController? controller;
+  KakaoMapController? controller;
 
   EdgeInsets _padding = const EdgeInsets.all(0);
 
   @override
   Widget build(BuildContext context) {
-    final NaverMap naverMap = NaverMap(
+    final KakaoMap naverMap = KakaoMap(
       onMapCreated: _onMapCreated,
       initialCameraPosition: const CameraPosition(
         target: _kMapCenter,
@@ -73,7 +73,7 @@ class MarkerIconsBodyState extends State<MarkerIconsBody> {
     );
   }
 
-  void _onMapCreated(NaverMapController controllerParam) {
+  void _onMapCreated(KakaoMapController controllerParam) {
     setState(() {
       controller = controllerParam;
     });

@@ -6,13 +6,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 import 'page.dart';
 
 const CameraPosition _kInitialPosition =
     CameraPosition(target: LatLng(37.3591784, 127.1048319), zoom: 11.0);
 
-class MapCoordinatesPage extends NaverMapExampleAppPage {
+class MapCoordinatesPage extends KakaoMapExampleAppPage {
   MapCoordinatesPage() : super(const Icon(Icons.map), 'Map coordinates');
 
   @override
@@ -31,7 +31,7 @@ class _MapCoordinatesBody extends StatefulWidget {
 class _MapCoordinatesBodyState extends State<_MapCoordinatesBody> {
   _MapCoordinatesBodyState();
 
-  NaverMapController? mapController;
+  KakaoMapController? mapController;
   LatLngBounds _visibleRegion = LatLngBounds(
     southwest: const LatLng(0, 0),
     northeast: const LatLng(0, 0),
@@ -39,7 +39,7 @@ class _MapCoordinatesBodyState extends State<_MapCoordinatesBody> {
 
   @override
   Widget build(BuildContext context) {
-    final NaverMap naverMap = NaverMap(
+    final KakaoMap naverMap = KakaoMap(
       onMapCreated: onMapCreated,
       initialCameraPosition: _kInitialPosition,
     );
@@ -72,7 +72,7 @@ class _MapCoordinatesBodyState extends State<_MapCoordinatesBody> {
     );
   }
 
-  void onMapCreated(NaverMapController controller) async {
+  void onMapCreated(KakaoMapController controller) async {
     final LatLngBounds visibleRegion = await controller.getVisibleRegion();
     setState(() {
       mapController = controller;

@@ -6,13 +6,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 import 'page.dart';
 
 const CameraPosition _kInitialPosition =
     CameraPosition(target: LatLng(37.3591784, 127.1048319), zoom: 11.0);
 
-class LiteModePage extends NaverMapExampleAppPage {
+class LiteModePage extends KakaoMapExampleAppPage {
   LiteModePage() : super(const Icon(Icons.map), 'Lite mode');
 
   @override
@@ -33,7 +33,7 @@ class _LiteModeBody extends StatelessWidget {
           child: SizedBox(
             width: 300.0,
             height: 300.0,
-            child: NaverMap(
+            child: KakaoMap(
               initialCameraPosition: _kInitialPosition,
               liteModeEnabled: true,
             ),

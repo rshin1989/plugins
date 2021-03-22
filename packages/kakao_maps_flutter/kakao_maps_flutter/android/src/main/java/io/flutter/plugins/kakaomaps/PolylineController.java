@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.model.Cap;
@@ -14,7 +14,7 @@ import java.util.List;
 /** Controller of a single Polyline on the map. */
 class PolylineController implements PolylineOptionsSink {
   private final Polyline polyline;
-  private final String naverMapsPolylineId;
+  private final String kakaoMapsPolylineId;
   private boolean consumeTapEvents;
   private final float density;
 
@@ -22,7 +22,7 @@ class PolylineController implements PolylineOptionsSink {
     this.polyline = polyline;
     this.consumeTapEvents = consumeTapEvents;
     this.density = density;
-    this.naverMapsPolylineId = polyline.getId();
+    this.kakaoMapsPolylineId = polyline.getId();
   }
 
   void remove() {
@@ -85,8 +85,8 @@ class PolylineController implements PolylineOptionsSink {
     polyline.setZIndex(zIndex);
   }
 
-  String getNaverMapsPolylineId() {
-    return naverMapsPolylineId;
+  String getKakaoMapsPolylineId() {
+    return kakaoMapsPolylineId;
   }
 
   boolean consumeTapEvents() {

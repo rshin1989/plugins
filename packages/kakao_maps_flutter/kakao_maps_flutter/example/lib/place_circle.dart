@@ -5,11 +5,11 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 
 import 'page.dart';
 
-class PlaceCirclePage extends NaverMapExampleAppPage {
+class PlaceCirclePage extends KakaoMapExampleAppPage {
   PlaceCirclePage() : super(const Icon(Icons.linear_scale), 'Place circle');
 
   @override
@@ -28,7 +28,7 @@ class PlaceCircleBody extends StatefulWidget {
 class PlaceCircleBodyState extends State<PlaceCircleBody> {
   PlaceCircleBodyState();
 
-  NaverMapController? controller;
+  KakaoMapController? controller;
   Map<CircleId, Circle> circles = <CircleId, Circle>{};
   int _circleIdCounter = 1;
   CircleId? selectedCircle;
@@ -47,7 +47,7 @@ class PlaceCircleBodyState extends State<PlaceCircleBody> {
   int widthsIndex = 0;
   List<int> widths = <int>[10, 20, 5];
 
-  void _onMapCreated(NaverMapController controller) {
+  void _onMapCreated(KakaoMapController controller) {
     this.controller = controller;
   }
 
@@ -149,7 +149,7 @@ class PlaceCircleBodyState extends State<PlaceCircleBody> {
           child: SizedBox(
             width: 350.0,
             height: 300.0,
-            child: NaverMap(
+            child: KakaoMap(
               initialCameraPosition: const CameraPosition(
                 target: LatLng(52.4478, -3.5402),
                 zoom: 7.0,

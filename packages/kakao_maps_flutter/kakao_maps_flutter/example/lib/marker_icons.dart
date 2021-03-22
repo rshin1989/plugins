@@ -6,11 +6,11 @@
 // ignore_for_file: unawaited_futures
 
 import 'package:flutter/material.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 
 import 'page.dart';
 
-class MarkerIconsPage extends NaverMapExampleAppPage {
+class MarkerIconsPage extends KakaoMapExampleAppPage {
   MarkerIconsPage() : super(const Icon(Icons.image), 'Marker icons');
 
   @override
@@ -29,7 +29,7 @@ class MarkerIconsBody extends StatefulWidget {
 const LatLng _kMapCenter = LatLng(52.4478, -3.5402);
 
 class MarkerIconsBodyState extends State<MarkerIconsBody> {
-  NaverMapController? controller;
+  KakaoMapController? controller;
   BitmapDescriptor? _markerIcon;
 
   @override
@@ -43,7 +43,7 @@ class MarkerIconsBodyState extends State<MarkerIconsBody> {
           child: SizedBox(
             width: 350.0,
             height: 300.0,
-            child: NaverMap(
+            child: KakaoMap(
               initialCameraPosition: const CameraPosition(
                 target: _kMapCenter,
                 zoom: 7.0,
@@ -88,7 +88,7 @@ class MarkerIconsBodyState extends State<MarkerIconsBody> {
     });
   }
 
-  void _onMapCreated(NaverMapController controllerParam) {
+  void _onMapCreated(KakaoMapController controllerParam) {
     setState(() {
       controller = controllerParam;
     });

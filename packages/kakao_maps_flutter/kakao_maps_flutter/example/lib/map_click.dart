@@ -6,13 +6,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 import 'page.dart';
 
 const CameraPosition _kInitialPosition =
     CameraPosition(target: LatLng(37.3591784, 127.1048319), zoom: 11.0);
 
-class MapClickPage extends NaverMapExampleAppPage {
+class MapClickPage extends KakaoMapExampleAppPage {
   MapClickPage() : super(const Icon(Icons.mouse), 'Map click');
 
   @override
@@ -31,13 +31,13 @@ class _MapClickBody extends StatefulWidget {
 class _MapClickBodyState extends State<_MapClickBody> {
   _MapClickBodyState();
 
-  NaverMapController? mapController;
+  KakaoMapController? mapController;
   LatLng? _lastTap;
   LatLng? _lastLongPress;
 
   @override
   Widget build(BuildContext context) {
-    final NaverMap naverMap = NaverMap(
+    final KakaoMap naverMap = KakaoMap(
       onMapCreated: onMapCreated,
       initialCameraPosition: _kInitialPosition,
       onTap: (LatLng pos) {
@@ -84,7 +84,7 @@ class _MapClickBodyState extends State<_MapClickBody> {
     );
   }
 
-  void onMapCreated(NaverMapController controller) async {
+  void onMapCreated(KakaoMapController controller) async {
     setState(() {
       mapController = controller;
     });

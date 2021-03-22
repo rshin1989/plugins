@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
 import android.content.Context;
 
@@ -30,9 +30,9 @@ public class KakaoMapFactory extends PlatformViewFactory {
   @Override
   public PlatformView create(Context context, int id, Object args) {
     Map<String, Object> params = (Map<String, Object>) args;
-    final NaverMapBuilder builder = new NaverMapBuilder();
+    final KakaoMapBuilder builder = new KakaoMapBuilder();
 
-    Convert.interpretNaverMapOptions(params.get("options"), builder);
+    Convert.interpretKakaoMapOptions(params.get("options"), builder);
     if (params.containsKey("initialCameraPosition")) {
       CameraPosition position = Convert.toCameraPosition(params.get("initialCameraPosition"));
       builder.setInitialCameraPosition(position);

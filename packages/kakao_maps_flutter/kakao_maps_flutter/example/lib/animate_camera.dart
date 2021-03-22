@@ -5,11 +5,11 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 
 import 'page.dart';
 
-class AnimateCameraPage extends NaverMapExampleAppPage {
+class AnimateCameraPage extends KakaoMapExampleAppPage {
   AnimateCameraPage()
       : super(const Icon(Icons.map), 'Camera control, animated');
 
@@ -26,9 +26,9 @@ class AnimateCamera extends StatefulWidget {
 }
 
 class AnimateCameraState extends State<AnimateCamera> {
-  NaverMapController? mapController;
+  KakaoMapController? mapController;
 
-  void _onMapCreated(NaverMapController controller) {
+  void _onMapCreated(KakaoMapController controller) {
     mapController = controller;
   }
 
@@ -42,7 +42,7 @@ class AnimateCameraState extends State<AnimateCamera> {
           child: SizedBox(
             width: 300.0,
             height: 200.0,
-            child: NaverMap(
+            child: KakaoMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition:
                   const CameraPosition(target: LatLng(0.0, 0.0)),

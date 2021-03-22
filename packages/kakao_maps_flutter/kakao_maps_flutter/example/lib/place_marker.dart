@@ -9,11 +9,11 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 
 import 'page.dart';
 
-class PlaceMarkerPage extends NaverMapExampleAppPage {
+class PlaceMarkerPage extends KakaoMapExampleAppPage {
   PlaceMarkerPage() : super(const Icon(Icons.place), 'Place marker');
 
   @override
@@ -35,12 +35,12 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
   PlaceMarkerBodyState();
   static final LatLng center = const LatLng(37.5670135, 126.9783740);
 
-  NaverMapController? controller;
+  KakaoMapController? controller;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId? selectedMarker;
   int _markerIdCounter = 1;
 
-  void _onMapCreated(NaverMapController controller) {
+  void _onMapCreated(KakaoMapController controller) {
     this.controller = controller;
   }
 
@@ -293,7 +293,7 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
           child: SizedBox(
             width: 300.0,
             height: 200.0,
-            child: NaverMap(
+            child: KakaoMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition: const CameraPosition(
                 target: LatLng(37.5670135, 126.9783740),

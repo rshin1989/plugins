@@ -8,11 +8,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 
 import 'page.dart';
 
-class ScrollingMapPage extends NaverMapExampleAppPage {
+class ScrollingMapPage extends KakaoMapExampleAppPage {
   ScrollingMapPage() : super(const Icon(Icons.map), 'Scrolling map');
 
   @override
@@ -43,7 +43,7 @@ class ScrollingMapBody extends StatelessWidget {
                   child: SizedBox(
                     width: 300.0,
                     height: 300.0,
-                    child: NaverMap(
+                    child: KakaoMap(
                       initialCameraPosition: CameraPosition(
                         target: center,
                         zoom: 11.0,
@@ -76,7 +76,7 @@ class ScrollingMapBody extends StatelessWidget {
                   child: SizedBox(
                     width: 300.0,
                     height: 300.0,
-                    child: NaverMap(
+                    child: KakaoMap(
                       initialCameraPosition: CameraPosition(
                         target: center,
                         zoom: 11.0,

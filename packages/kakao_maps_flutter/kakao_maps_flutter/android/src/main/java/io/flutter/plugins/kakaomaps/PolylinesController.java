@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
-import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.KakaoMap;
 import com.naver.maps.model.Polyline;
 import com.naver.maps.model.PolylineOptions;
 
@@ -16,20 +16,20 @@ import java.util.Map;
 class PolylinesController {
 
   private final Map<String, PolylineController> polylineIdToController;
-  private final Map<String, String> naverMapsPolylineIdToDartPolylineId;
+  private final Map<String, String> kakaoMapsPolylineIdToDartPolylineId;
   private final MethodChannel methodChannel;
-  private NaverMap naverMap;
+  private KakaoMap kakaoMap;
   private final float density;
 
   PolylinesController(MethodChannel methodChannel, float density) {
     this.polylineIdToController = new HashMap<>();
-    this.naverMapsPolylineIdToDartPolylineId = new HashMap<>();
+    this.kakaoMapsPolylineIdToDartPolylineId = new HashMap<>();
     this.methodChannel = methodChannel;
     this.density = density;
   }
 
-  void setNaverMap(NaverMap naverMap) {
-    this.naverMap = naverMap;
+  void setKakaoMap(KakaoMap kakaoMap) {
+    this.kakaoMap = kakaoMap;
   }
 
   void addPolylines(List<Object> polylinesToAdd) {
@@ -60,13 +60,13 @@ class PolylinesController {
       final PolylineController polylineController = polylineIdToController.remove(polylineId);
       if (polylineController != null) {
         polylineController.remove();
-        naverMapsPolylineIdToDartPolylineId.remove(polylineController.getNaverMapsPolylineId());
+        kakaoMapsPolylineIdToDartPolylineId.remove(polylineController.getKakaoMapsPolylineId());
       }
     }
   }
 
   boolean onPolylineTap(String googlePolylineId) {
-    String polylineId = naverMapsPolylineIdToDartPolylineId.get(googlePolylineId);
+    String polylineId = kakaoMapsPolylineIdToDartPolylineId.get(googlePolylineId);
     if (polylineId == null) {
       return false;
     }
@@ -91,10 +91,10 @@ class PolylinesController {
   private void addPolyline(
       String polylineId, PolylineOptions polylineOptions, boolean consumeTapEvents) {
     //TODO("addPolyline")
-//    final Polyline polyline = naverMap.addPolyline(polylineOptions);
+//    final Polyline polyline = kakaoMap.addPolyline(polylineOptions);
 //    PolylineController controller = new PolylineController(polyline, consumeTapEvents, density);
 //    polylineIdToController.put(polylineId, controller);
-//    naverMapsPolylineIdToDartPolylineId.put(polyline.getId(), polylineId);
+//    kakaoMapsPolylineIdToDartPolylineId.put(polyline.getId(), polylineId);
   }
 
   private void changePolyline(Object polyline) {

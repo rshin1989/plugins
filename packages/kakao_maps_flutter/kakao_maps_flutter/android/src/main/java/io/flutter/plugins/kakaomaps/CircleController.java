@@ -2,15 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
-
-import com.naver.maps.geometry.LatLng;
-import com.naver.maps.model.Circle;
+package io.flutter.plugins.kakaomaps;
 
 /** Controller of a single Circle on the map. */
 class CircleController implements CircleOptionsSink {
   private final Circle circle;
-  private final String naverMapsCircleId;
+  private final String kakaoMapsCircleId;
   private final float density;
   private boolean consumeTapEvents;
 
@@ -18,7 +15,7 @@ class CircleController implements CircleOptionsSink {
     this.circle = circle;
     this.consumeTapEvents = consumeTapEvents;
     this.density = density;
-    this.naverMapsCircleId = circle.getId();
+    this.kakaoMapsCircleId = circle.getId();
   }
 
   void remove() {
@@ -66,8 +63,8 @@ class CircleController implements CircleOptionsSink {
     circle.setZIndex(zIndex);
   }
 
-  String getNaverMapsCircleId() {
-    return naverMapsCircleId;
+  String getKakaoMapsCircleId() {
+    return kakaoMapsCircleId;
   }
 
   boolean consumeTapEvents() {

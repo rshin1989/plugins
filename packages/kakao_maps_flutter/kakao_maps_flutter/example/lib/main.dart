@@ -5,7 +5,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
-import 'package:naver_maps_flutter_example/lite_mode.dart';
+import 'package:kakao_maps_flutter_example/lite_mode.dart';
 import 'animate_camera.dart';
 import 'map_click.dart';
 import 'map_coordinates.dart';
@@ -22,7 +22,7 @@ import 'scrolling_map.dart';
 import 'snapshot.dart';
 import 'tile_overlay.dart';
 
-final List<NaverMapExampleAppPage> _allPages = <NaverMapExampleAppPage>[
+final List<KakaoMapExampleAppPage> _allPages = <KakaoMapExampleAppPage>[
   MapUiPage(),
   MapCoordinatesPage(),
   MapClickPage(),
@@ -41,7 +41,7 @@ final List<NaverMapExampleAppPage> _allPages = <NaverMapExampleAppPage>[
 ];
 
 class MapsDemo extends StatelessWidget {
-  void _pushPage(BuildContext context, NaverMapExampleAppPage page) {
+  void _pushPage(BuildContext context, KakaoMapExampleAppPage page) {
     Navigator.of(context).push(MaterialPageRoute<void>(
         builder: (_) => Scaffold(
               appBar: AppBar(title: Text(page.title)),
@@ -52,7 +52,7 @@ class MapsDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('NaverMaps examples')),
+      appBar: AppBar(title: const Text('KakaoMaps examples')),
       body: ListView.builder(
         itemCount: _allPages.length,
         itemBuilder: (_, int index) => ListTile(

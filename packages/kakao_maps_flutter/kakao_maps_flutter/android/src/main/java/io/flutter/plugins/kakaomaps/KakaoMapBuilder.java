@@ -2,21 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
 import android.content.Context;
 import android.graphics.Rect;
 
 import com.naver.maps.geometry.LatLngBounds;
 import com.naver.maps.map.CameraPosition;
-import com.naver.maps.map.NaverMap;
-import com.naver.maps.map.NaverMapOptions;
+import com.naver.maps.map.KakaoMap;
+import com.naver.maps.map.KakaoMapOptions;
 import io.flutter.plugin.common.BinaryMessenger;
 import java.util.List;
 import java.util.Map;
 
-class KakaoMapBuilder implements NaverMapOptionsSink {
-  private final NaverMapOptions options = new NaverMapOptions();
+class KakaoMapBuilder implements KakaoMapOptionsSink {
+  private final KakaoMapOptions options = new KakaoMapOptions();
   private boolean trackCameraPosition = false;
   private boolean myLocationEnabled = false;
   private boolean myLocationButtonEnabled = false;
@@ -30,13 +30,13 @@ class KakaoMapBuilder implements NaverMapOptionsSink {
   private List<Map<String, ?>> initialTileOverlays;
   private Rect padding = new Rect(0, 0, 0, 0);
 
-  NaverMapController build(
+  KakaoMapController build(
       int id,
       Context context,
       BinaryMessenger binaryMessenger,
       LifecycleProvider lifecycleProvider) {
-    final NaverMapController controller =
-        new NaverMapController(id, context, binaryMessenger, lifecycleProvider, options);
+    final KakaoMapController controller =
+        new KakaoMapController(id, context, binaryMessenger, lifecycleProvider, options);
     controller.init();
     controller.setMyLocationEnabled(myLocationEnabled);
     controller.setMyLocationButtonEnabled(myLocationButtonEnabled);
@@ -76,28 +76,28 @@ class KakaoMapBuilder implements NaverMapOptionsSink {
 
   @Override
   public void setMapType(int mapType) {
-    NaverMap.MapType naverMapType;
+    KakaoMap.MapType kakaoMapType;
     switch (mapType) {
       case 0:
-        naverMapType = NaverMap.MapType.Basic;
+        kakaoMapType = KakaoMap.MapType.Basic;
         break;
       case 1:
-        naverMapType = NaverMap.MapType.Navi;
+        kakaoMapType = KakaoMap.MapType.Navi;
         break;
       case 2:
-        naverMapType = NaverMap.MapType.Satellite;
+        kakaoMapType = KakaoMap.MapType.Satellite;
         break;
       case 3:
-        naverMapType = NaverMap.MapType.Hybrid;
+        kakaoMapType = KakaoMap.MapType.Hybrid;
         break;
       case 4:
-        naverMapType = NaverMap.MapType.Terrain;
+        kakaoMapType = KakaoMap.MapType.Terrain;
         break;
       default:
-        naverMapType = NaverMap.MapType.None;
+        kakaoMapType = KakaoMap.MapType.None;
         break;
     }
-    options.mapType(naverMapType);
+    options.mapType(kakaoMapType);
   }
 
   @Override

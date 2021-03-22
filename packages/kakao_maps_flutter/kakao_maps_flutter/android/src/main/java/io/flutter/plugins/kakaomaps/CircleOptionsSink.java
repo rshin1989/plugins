@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
-import com.naver.maps.geometry.LatLng;
+import net.daum.mf.map.api.MapPoint;
 
 /** Receiver of Circle configuration options. */
 interface CircleOptionsSink {
@@ -15,7 +15,7 @@ interface CircleOptionsSink {
 
   void setFillColor(int fillColor);
 
-  void setCenter(LatLng center);
+  void setCenter(MapPoint center);
 
   void setRadius(double radius);
 

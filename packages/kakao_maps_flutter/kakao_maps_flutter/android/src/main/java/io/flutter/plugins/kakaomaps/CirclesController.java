@@ -2,11 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
-import com.naver.maps.map.NaverMap;
-import com.naver.maps.model.Circle;
-import com.naver.maps.model.CircleOptions;
+import net.daum.mf.map.api.MapView;
 
 import io.flutter.plugin.common.MethodChannel;
 import java.util.HashMap;
@@ -16,20 +14,20 @@ import java.util.Map;
 class CirclesController {
 
   private final Map<String, CircleController> circleIdToController;
-  private final Map<String, String> naverMapsCircleIdToDartCircleId;
+  private final Map<String, String> kakaoMapsCircleIdToDartCircleId;
   private final MethodChannel methodChannel;
   private final float density;
-  private NaverMap naverMap;
+  private MapView kakaoMap;
 
   CirclesController(MethodChannel methodChannel, float density) {
     this.circleIdToController = new HashMap<>();
-    this.naverMapsCircleIdToDartCircleId = new HashMap<>();
+    this.kakaoMapsCircleIdToDartCircleId = new HashMap<>();
     this.methodChannel = methodChannel;
     this.density = density;
   }
 
-  void setNaverMap(NaverMap naverMap) {
-    this.naverMap = naverMap;
+  void setKakaoMap(KakaoMap kakaoMap) {
+    this.kakaoMap = kakaoMap;
   }
 
   void addCircles(List<Object> circlesToAdd) {
@@ -60,13 +58,13 @@ class CirclesController {
       final CircleController circleController = circleIdToController.remove(circleId);
       if (circleController != null) {
         circleController.remove();
-        naverMapsCircleIdToDartCircleId.remove(circleController.getNaverMapsCircleId());
+        kakaoMapsCircleIdToDartCircleId.remove(circleController.getKakaoMapsCircleId());
       }
     }
   }
 
   boolean onCircleTap(String googleCircleId) {
-    String circleId = naverMapsCircleIdToDartCircleId.get(googleCircleId);
+    String circleId = kakaoMapsCircleIdToDartCircleId.get(googleCircleId);
     if (circleId == null) {
       return false;
     }
@@ -92,10 +90,10 @@ class CirclesController {
   private void addCircle(String circleId, CircleOptions circleOptions, boolean consumeTapEvents) {
       throw new UnsupportedOperationException();
 //TODO('Implement addCircle')
-//    final Circle circle = naverMap.addCircle(circleOptions);
+//    final Circle circle = kakaoMap.addCircle(circleOptions);
 //    CircleController controller = new CircleController(circle, consumeTapEvents, density);
 //    circleIdToController.put(circleId, controller);
-//    naverMapsCircleIdToDartCircleId.put(circle.getId(), circleId);
+//    kakaoMapsCircleIdToDartCircleId.put(circle.getId(), circleId);
   }
 
   private void changeCircle(Object circle) {

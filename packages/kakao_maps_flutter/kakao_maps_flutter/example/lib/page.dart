@@ -6,8 +6,8 @@
 
 import 'package:flutter/material.dart';
 
-abstract class NaverMapExampleAppPage extends StatelessWidget {
-  const NaverMapExampleAppPage(this.leading, this.title);
+abstract class KakaoMapExampleAppPage extends StatelessWidget {
+  const KakaoMapExampleAppPage(this.leading, this.title);
 
   final Widget leading;
   final String title;

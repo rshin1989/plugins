@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package android.src.main.java.io.flutter.plugins.kakaomaps;
+package io.flutter.plugins.kakaomaps;
 
-import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.KakaoMap;
 import com.naver.maps.model.TileOverlay;
 import com.naver.maps.model.TileOverlayOptions;
 
@@ -17,15 +17,15 @@ class TileOverlaysController {
 
   private final Map<String, TileOverlayController> tileOverlayIdToController;
   private final MethodChannel methodChannel;
-  private NaverMap naverMap;
+  private KakaoMap kakaoMap;
 
   TileOverlaysController(MethodChannel methodChannel) {
     this.tileOverlayIdToController = new HashMap<>();
     this.methodChannel = methodChannel;
   }
 
-  void setNaverMap(NaverMap naverMap) {
-    this.naverMap = naverMap;
+  void setKakaoMap(KakaoMap kakaoMap) {
+    this.kakaoMap = kakaoMap;
   }
 
   void addTileOverlays(List<Map<String, ?>> tileOverlaysToAdd) {
@@ -92,7 +92,7 @@ class TileOverlaysController {
 //        new TileProviderController(methodChannel, tileOverlayId);
 //    tileOverlayOptionsBuilder.setTileProvider(tileProviderController);
 //    TileOverlayOptions options = tileOverlayOptionsBuilder.build();
-//    TileOverlay tileOverlay = naverMap.addTileOverlay(options);
+//    TileOverlay tileOverlay = kakaoMap.addTileOverlay(options);
 //    TileOverlayController tileOverlayController = new TileOverlayController(tileOverlay);
 //    tileOverlayIdToController.put(tileOverlayId, tileOverlayController);
   }

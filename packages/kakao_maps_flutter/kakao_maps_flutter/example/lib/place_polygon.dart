@@ -5,11 +5,11 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
-import 'package:naver_maps_flutter/naver_maps_flutter.dart';
+import 'package:kakao_maps_flutter/kakao_maps_flutter.dart';
 
 import 'page.dart';
 
-class PlacePolygonPage extends NaverMapExampleAppPage {
+class PlacePolygonPage extends KakaoMapExampleAppPage {
   PlacePolygonPage() : super(const Icon(Icons.linear_scale), 'Place polygon');
 
   @override
@@ -28,7 +28,7 @@ class PlacePolygonBody extends StatefulWidget {
 class PlacePolygonBodyState extends State<PlacePolygonBody> {
   PlacePolygonBodyState();
 
-  NaverMapController? controller;
+  KakaoMapController? controller;
   Map<PolygonId, Polygon> polygons = <PolygonId, Polygon>{};
   Map<PolygonId, double> polygonOffsets = <PolygonId, double>{};
   int _polygonIdCounter = 0;
@@ -48,7 +48,7 @@ class PlacePolygonBodyState extends State<PlacePolygonBody> {
   int widthsIndex = 0;
   List<int> widths = <int>[10, 20, 5];
 
-  void _onMapCreated(NaverMapController controller) {
+  void _onMapCreated(KakaoMapController controller) {
     this.controller = controller;
   }
 
@@ -175,7 +175,7 @@ class PlacePolygonBodyState extends State<PlacePolygonBody> {
           child: SizedBox(
             width: 350.0,
             height: 300.0,
-            child: NaverMap(
+            child: KakaoMap(
               initialCameraPosition: const CameraPosition(
                 target: LatLng(52.4478, -3.5402),
                 zoom: 7.0,
