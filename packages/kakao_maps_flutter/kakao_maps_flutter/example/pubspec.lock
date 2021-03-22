@@ -91,9 +91,11 @@ packages:
   kakao_maps_flutter_platform_interface:
     dependency: transitive
     description:
-      path: "../../kakao_maps_flutter_platform_interface"
-      relative: true
-    source: path
+      path: "packages/kakao_maps_flutter/kakao_maps_flutter_platform_interface"
+      ref: HEAD
+      resolved-ref: bee2ae32d78947ada41a8e2d2eed4253a8971501
+      url: "git://github.com/clearmaps/plugins.git"
+    source: git
     version: "1.0.1+21031501"
   matcher:
     dependency: transitive

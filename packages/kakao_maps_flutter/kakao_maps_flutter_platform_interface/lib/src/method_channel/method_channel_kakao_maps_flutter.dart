@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/gestures.dart';
-import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:kakao_maps_flutter_platform_interface/kakao_maps_flutter_platform_interface.dart';
+import 'package:kakao_maps_flutter_platform_interface/src/types/tile_overlay_updates.dart';
 
 import 'package:stream_transform/stream_transform.dart';
 
