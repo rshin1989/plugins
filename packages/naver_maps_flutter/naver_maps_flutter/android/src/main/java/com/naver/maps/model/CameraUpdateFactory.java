@@ -1,6 +1,7 @@
 package com.naver.maps.model;
 
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.geometry.LatLngBounds;
@@ -9,42 +10,42 @@ import com.naver.maps.map.CameraUpdate;
 
 public class CameraUpdateFactory {
     public static CameraUpdate newCameraPosition(CameraPosition toCameraPosition) {
-        return null;
+        return CameraUpdate.toCameraPosition(toCameraPosition);
     }
 
     public static CameraUpdate newLatLng(LatLng toLatLng) {
-        return null;
+        return CameraUpdate.scrollTo(toLatLng);
     }
 
     public static CameraUpdate newLatLngBounds(LatLngBounds toLatLngBounds, int toPixels) {
-        return null;
+        return CameraUpdate.fitBounds(toLatLngBounds, toPixels);
     }
 
     public static CameraUpdate newLatLngZoom(LatLng toLatLng, float toFloat) {
-        return null;
+        return CameraUpdate.scrollAndZoomTo(toLatLng, toFloat);
     }
 
     public static CameraUpdate scrollBy(float toFractionalPixels, float toFractionalPixels1) {
-        return null;
+        return CameraUpdate.scrollBy(new PointF(toFractionalPixels, toFractionalPixels1));
     }
 
     public static CameraUpdate zoomBy(float toFloat) {
-        return null;
+        return CameraUpdate.zoomBy(toFloat);
     }
 
     public static CameraUpdate zoomBy(float toFloat, Point toPoint) {
-        return null;
+        return CameraUpdate.scrollBy(new PointF(toPoint.x, toPoint.y)).zoomTo(toFloat);
     }
 
     public static CameraUpdate zoomIn() {
-        return null;
+        return CameraUpdate.zoomIn();
     }
 
     public static CameraUpdate zoomOut() {
-        return null;
+        return CameraUpdate.zoomOut();
     }
 
     public static CameraUpdate zoomTo(float toFloat) {
-        return null;
+        return CameraUpdate.zoomTo(toFloat);
     }
 }

@@ -24,7 +24,7 @@ class ScrollingMapPage extends NaverMapExampleAppPage {
 class ScrollingMapBody extends StatelessWidget {
   const ScrollingMapBody();
 
-  final LatLng center = const LatLng(32.080664, 34.9563837);
+  final LatLng center = const LatLng(37.3591784, 127.1048319);
 
   @override
   Widget build(BuildContext context) {

@@ -227,9 +227,7 @@ final class NaverMapController
                   @Override
                   public void onSnapshotReady(Bitmap bitmap) {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    //TODO("onSnapshotReady")
-
-//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     byte[] byteArray = stream.toByteArray();
                     bitmap.recycle();
                     _result.success(byteArray);
@@ -901,11 +899,15 @@ final class NaverMapController
   @Override
   public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
     Log.d("NaverMapController", "[onMapClick] ------ " + pointF.toString() + " " + latLng.toString());
+    // Connect with google maps interface
+    onMapClick(latLng);
   }
 
   @Override
   public void onMapLongClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
     Log.d("NaverMapController", "[onMapLongClick] ------ " + pointF.toString() + " " + latLng.toString());
+      // Connect with google maps interface
+    onMapLongClick(latLng);
   }
 
   @Override

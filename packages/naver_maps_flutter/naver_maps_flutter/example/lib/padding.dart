@@ -24,7 +24,7 @@ class MarkerIconsBody extends StatefulWidget {
   State<StatefulWidget> createState() => MarkerIconsBodyState();
 }
 
-const LatLng _kMapCenter = LatLng(52.4478, -3.5402);
+const LatLng _kMapCenter = LatLng(37.3591784, 127.1048319);
 
 class MarkerIconsBodyState extends State<MarkerIconsBody> {
   NaverMapController? controller;

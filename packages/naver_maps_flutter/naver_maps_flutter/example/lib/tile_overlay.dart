@@ -81,7 +81,7 @@ class TileOverlayBodyState extends State<TileOverlayBody> {
             height: 300.0,
             child: NaverMap(
               initialCameraPosition: const CameraPosition(
-                target: LatLng(59.935460, 30.325177),
+                target: LatLng(37.3591784, 127.1048319),
                 zoom: 7.0,
               ),
               tileOverlays: overlays as Set<TileOverlay>,

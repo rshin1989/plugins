@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.util.Log;
 
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.geometry.LatLngBounds;
@@ -102,31 +103,43 @@ class Convert {
 
   static CameraUpdate toCameraUpdate(Object o, float density) {
     final List<?> data = toList(o);
+
+    Log.d("NaverMapController", "[toCameraUpdate] ------ " + toString(data.get(0)));
+
     switch (toString(data.get(0))) {
       case "newCameraPosition":
+        Log.d("NaverMapController", "[newCameraPosition] ------ " + toCameraPosition(data.get(1)));
         return CameraUpdateFactory.newCameraPosition(toCameraPosition(data.get(1)));
       case "newLatLng":
+        Log.d("NaverMapController", "[newLatLng] ------ " + toLatLng(data.get(1)));
         return CameraUpdateFactory.newLatLng(toLatLng(data.get(1)));
       case "newLatLngBounds":
+        Log.d("NaverMapController", "[newLatLngBounds] ------ " + toLatLngBounds(data.get(1)));
         return CameraUpdateFactory.newLatLngBounds(
             toLatLngBounds(data.get(1)), toPixels(data.get(2), density));
       case "newLatLngZoom":
+        Log.d("NaverMapController", "[newLatLngZoom] ------ " + toLatLng(data.get(1)));
         return CameraUpdateFactory.newLatLngZoom(toLatLng(data.get(1)), toFloat(data.get(2)));
       case "scrollBy":
+        Log.d("NaverMapController", "[scrollBy] ------ " + toLatLng(data.get(1)));
         return CameraUpdateFactory.scrollBy( //
             toFractionalPixels(data.get(1), density), //
             toFractionalPixels(data.get(2), density));
       case "zoomBy":
+        Log.d("NaverMapController", "[zoomBy] ------ " + toFloat(data.get(1)));
         if (data.size() == 2) {
           return CameraUpdateFactory.zoomBy(toFloat(data.get(1)));
         } else {
           return CameraUpdateFactory.zoomBy(toFloat(data.get(1)), toPoint(data.get(2), density));
         }
       case "zoomIn":
+        Log.d("NaverMapController", "[zoomIn] ------ ");
         return CameraUpdateFactory.zoomIn();
       case "zoomOut":
+        Log.d("NaverMapController", "[zoomOut] ------ ");
         return CameraUpdateFactory.zoomOut();
       case "zoomTo":
+        Log.d("NaverMapController", "[zoomTo] ------ " + toFloat(data.get(1)));
         return CameraUpdateFactory.zoomTo(toFloat(data.get(1)));
       default:
         throw new IllegalArgumentException("Cannot interpret " + o + " as CameraUpdate");

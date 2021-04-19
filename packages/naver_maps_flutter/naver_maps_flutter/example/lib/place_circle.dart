@@ -151,7 +151,7 @@ class PlaceCircleBodyState extends State<PlaceCircleBody> {
             height: 300.0,
             child: NaverMap(
               initialCameraPosition: const CameraPosition(
-                target: LatLng(52.4478, -3.5402),
+                target: LatLng(37.3591784, 127.1048319),
                 zoom: 7.0,
               ),
               circles: Set<Circle>.of(circles.values),

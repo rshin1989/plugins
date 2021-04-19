@@ -177,7 +177,7 @@ class PlacePolygonBodyState extends State<PlacePolygonBody> {
             height: 300.0,
             child: NaverMap(
               initialCameraPosition: const CameraPosition(
-                target: LatLng(52.4478, -3.5402),
+                target: LatLng(37.3591784, 127.1048319),
                 zoom: 7.0,
               ),
               polygons: Set<Polygon>.of(polygons.values),

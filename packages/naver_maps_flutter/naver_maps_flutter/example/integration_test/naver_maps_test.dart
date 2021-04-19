@@ -923,10 +923,11 @@ void main() {
     await tester.pumpWidget(Directionality(
       textDirection: TextDirection.ltr,
       child: NaverMap(
-        initialCameraPosition: const CameraPosition(target: LatLng(10.0, 15.0)),
+        initialCameraPosition:
+            const CameraPosition(target: LatLng(37.3591784, 127.1048319)),
         markers: markers,
-        onMapCreated: (NaverMapController NaverMapController) {
-          controllerCompleter.complete(NaverMapController);
+        onMapCreated: (NaverMapController naverMapController) {
+          controllerCompleter.complete(naverMapController);
         },
       ),
     ));

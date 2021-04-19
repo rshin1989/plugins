@@ -215,7 +215,7 @@ class PlacePolylineBodyState extends State<PlacePolylineBody> {
             height: 300.0,
             child: NaverMap(
               initialCameraPosition: const CameraPosition(
-                target: LatLng(53.1721, -3.5402),
+                target: LatLng(37.3591784, 127.1048319),
                 zoom: 7.0,
               ),
               polylines: Set<Polyline>.of(polylines.values),

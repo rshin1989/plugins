@@ -20,6 +20,7 @@ class MoveCameraPage extends NaverMapExampleAppPage {
 
 class MoveCamera extends StatefulWidget {
   const MoveCamera();
+
   @override
   State createState() => MoveCameraState();
 }
@@ -44,7 +45,7 @@ class MoveCameraState extends State<MoveCamera> {
             child: NaverMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition:
-                  const CameraPosition(target: LatLng(0.0, 0.0)),
+                  const CameraPosition(target: LatLng(37.3591784, 127.1048319)),
             ),
           ),
         ),
@@ -59,7 +60,7 @@ class MoveCameraState extends State<MoveCamera> {
                       CameraUpdate.newCameraPosition(
                         const CameraPosition(
                           bearing: 270.0,
-                          target: LatLng(51.5160895, -0.1294527),
+                          target: LatLng(37.508643, 127.0468693),
                           tilt: 30.0,
                           zoom: 17.0,
                         ),
@@ -72,7 +73,7 @@ class MoveCameraState extends State<MoveCamera> {
                   onPressed: () {
                     mapController?.moveCamera(
                       CameraUpdate.newLatLng(
-                        const LatLng(56.1725505, 10.1850512),
+                        const LatLng(37.577914,126.9747743),
                       ),
                     );
                   },
@@ -83,8 +84,8 @@ class MoveCameraState extends State<MoveCamera> {
                     mapController?.moveCamera(
                       CameraUpdate.newLatLngBounds(
                         LatLngBounds(
-                          southwest: const LatLng(-38.483935, 113.248673),
-                          northeast: const LatLng(-8.982446, 153.823821),
+                          southwest: const LatLng(37.593894,126.9737203),
+                          northeast: const LatLng(37.56913,126.9744913),
                         ),
                         10.0,
                       ),
@@ -96,7 +97,7 @@ class MoveCameraState extends State<MoveCamera> {
                   onPressed: () {
                     mapController?.moveCamera(
                       CameraUpdate.newLatLngZoom(
-                        const LatLng(37.4231613, -122.087159),
+                        const LatLng(37.578042,126.9746843),
                         11.0,
                       ),
                     );
