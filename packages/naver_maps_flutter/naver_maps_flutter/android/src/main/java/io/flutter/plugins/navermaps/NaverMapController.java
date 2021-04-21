@@ -104,7 +104,7 @@ final class NaverMapController
     methodChannel = new MethodChannel(binaryMessenger, "plugins.flutter.io/naver_maps_" + id);
     methodChannel.setMethodCallHandler(this);
     this.lifecycleProvider = lifecycleProvider;
-    this.markersController = new MarkersController(methodChannel);
+    this.markersController = new MarkersController(context, methodChannel);
     this.polygonsController = new PolygonsController(methodChannel, density);
     this.polylinesController = new PolylinesController(methodChannel, density);
     this.circlesController = new CirclesController(methodChannel, density);

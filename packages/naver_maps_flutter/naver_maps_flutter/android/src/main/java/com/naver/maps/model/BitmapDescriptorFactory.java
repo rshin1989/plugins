@@ -5,18 +5,18 @@ import android.graphics.Bitmap;
 public class BitmapDescriptorFactory {
 
     public static BitmapDescriptor fromAsset(String asset) {
-        return null;
+      return new BitmapDescriptor(asset, BitmapDescriptor.Type.PATH_ASSET);
     }
 
     public static BitmapDescriptor fromBitmap(Bitmap bitmap) {
-        return null;
+      return new BitmapDescriptor(bitmap);
     }
 
     public static BitmapDescriptor defaultMarker() {
-        return null;
+      return null;
     }
 
     public static BitmapDescriptor defaultMarker(float toFloat) {
-        return null;
+      return null;
     }
 }

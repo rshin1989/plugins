@@ -4,6 +4,7 @@
 
 package io.flutter.plugins.navermaps;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.naver.maps.geometry.LatLng;
@@ -18,13 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 class MarkersController {
-
+    private final Context context;
     private final Map<String, MarkerController> markerIdToController;
     private final Map<String, String> naverMapsMarkerIdToDartMarkerId;
     private final MethodChannel methodChannel;
     private NaverMap naverMap;
 
-    MarkersController(MethodChannel methodChannel) {
+    MarkersController(Context context, MethodChannel methodChannel) {
+        this.context = context;
         this.markerIdToController = new HashMap<>();
         this.naverMapsMarkerIdToDartMarkerId = new HashMap<>();
         this.methodChannel = methodChannel;
@@ -70,7 +72,7 @@ class MarkersController {
     void showMarkerInfoWindow(String markerId, MethodChannel.Result result) {
         MarkerController markerController = markerIdToController.get(markerId);
         if (markerController != null) {
-            markerController.showInfoWindow();
+            markerController.showInfoWindow(naverMap);
             result.success(null);
         } else {
             result.error("Invalid markerId", "showInfoWindow called with invalid markerId", null);
@@ -139,14 +141,12 @@ class MarkersController {
     }
 
     private void addMarker(String markerId, MarkerOptions markerOptions, boolean consumeTapEvents) {
-        Log.d("MarkersController", "[addMarker] --------------- " + markerId);
-
         final Marker marker = new Marker();
         marker.setPosition(markerOptions.getPosition());
         marker.setMap(naverMap);
 
         String naverMarkerId = Integer.toString(marker.hashCode());
-        MarkerController controller = new MarkerController(marker, consumeTapEvents);
+        MarkerController controller = new MarkerController(context, marker, consumeTapEvents);
         markerIdToController.put(markerId, controller);
         naverMapsMarkerIdToDartMarkerId.put(naverMarkerId, markerId);
         marker.setOnClickListener(overlay -> onMarkerTap(naverMarkerId));
