@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.location.Location;
 import android.os.Bundle;
@@ -162,7 +161,6 @@ final class NaverMapController
 
   @Override
   public void onMethodCall(MethodCall call, MethodChannel.Result result) {
-    Log.d("NaverMapController", "[onMethodCall] ----------- " + call.method);
     switch (call.method) {
       case "map#waitForMap":
         if (naverMap != null) {

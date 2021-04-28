@@ -6,6 +6,9 @@
 // ignore_for_file: unawaited_futures
 
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naver_maps_flutter/naver_maps_flutter.dart';
 
 import 'page.dart';
@@ -35,6 +38,7 @@ class MarkerIconsBodyState extends State<MarkerIconsBody> {
   @override
   Widget build(BuildContext context) {
     _createMarkerImageFromAsset(context);
+    // _createMarkerImageFromSvgAsset(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -70,6 +74,38 @@ class MarkerIconsBodyState extends State<MarkerIconsBody> {
         position: _kMapCenter,
       );
     }
+  }
+
+  Future<void> _createMarkerImageFromSvgAsset(BuildContext context) async {
+    String assetName = 'assets/ic_marker.svg';
+    // Read SVG file as String
+    String svgString =
+        await DefaultAssetBundle.of(context).loadString(assetName);
+    // Create DrawableRoot from SVG String
+    DrawableRoot svgDrawableRoot =
+        await svg.fromSvgString(svgString, assetName);
+
+    // toPicture() and toImage() don't seem to be pixel ratio aware, so we calculate the actual sizes here
+    MediaQueryData queryData = MediaQuery.of(context);
+    double devicePixelRatio = queryData.devicePixelRatio;
+
+    // where 32 is your SVG's original width
+    double width = 32 * devicePixelRatio;
+    double height = 32 * devicePixelRatio; // same thing
+    print('width: $width, height: $height');
+
+    // Convert to ui.Picture
+    ui.Picture picture = svgDrawableRoot.toPicture(size: Size(width, height));
+
+    // Convert to ui.Image. toImage() takes width and height as parameters
+    // you need to find the best size to suit your needs and take into account the
+    // screen DPI
+    ui.Image image = await picture.toImage(width.toInt(), height.toInt());
+    ByteData? bytes = await image.toByteData(format: ui.ImageByteFormat.png);
+    BitmapDescriptor bitmapDescriptior = BitmapDescriptor.fromBytes(
+      bytes!.buffer.asUint8List(),
+    );
+    _updateBitmap(bitmapDescriptior);
   }
 
   Future<void> _createMarkerImageFromAsset(BuildContext context) async {
