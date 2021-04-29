@@ -44,8 +44,8 @@ class MoveCameraState extends State<MoveCamera> {
             height: 200.0,
             child: NaverMap(
               onMapCreated: _onMapCreated,
-              initialCameraPosition:
-                  const CameraPosition(target: LatLng(37.3591784, 127.1048319)),
+              initialCameraPosition: const CameraPosition(
+                  target: LatLng(37.3591784, 127.1048319), zoom: 17.0),
             ),
           ),
         ),
@@ -73,7 +73,7 @@ class MoveCameraState extends State<MoveCamera> {
                   onPressed: () {
                     mapController?.moveCamera(
                       CameraUpdate.newLatLng(
-                        const LatLng(37.577914,126.9747743),
+                        const LatLng(37.577914, 126.9747743),
                       ),
                     );
                   },
@@ -84,8 +84,8 @@ class MoveCameraState extends State<MoveCamera> {
                     mapController?.moveCamera(
                       CameraUpdate.newLatLngBounds(
                         LatLngBounds(
-                          southwest: const LatLng(37.593894,126.9737203),
-                          northeast: const LatLng(37.56913,126.9744913),
+                          northeast: const LatLng(37.7337326, 127.0429178),
+                          southwest: const LatLng(37.3455615, 127.0874926),
                         ),
                         10.0,
                       ),
@@ -97,7 +97,7 @@ class MoveCameraState extends State<MoveCamera> {
                   onPressed: () {
                     mapController?.moveCamera(
                       CameraUpdate.newLatLngZoom(
-                        const LatLng(37.578042,126.9746843),
+                        const LatLng(37.578042, 126.9746843),
                         11.0,
                       ),
                     );
