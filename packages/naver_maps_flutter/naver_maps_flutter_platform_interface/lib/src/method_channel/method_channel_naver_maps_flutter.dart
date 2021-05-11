@@ -371,11 +371,11 @@ class MethodChannelNaverMapsFlutter extends NaverMapsFlutterPlatform {
     LatLng latLng, {
     required int mapId,
   }) async {
-    final Map<String, int> point = (await channel(mapId)
-        .invokeMapMethod<String, int>(
-            'map#getScreenCoordinate', latLng.toJson()))!;
+    final Map<String, double> point = (await channel(mapId)
+        .invokeMapMethod<String, double>(
+        'map#getScreenCoordinate', latLng.toJson()))!;
 
-    return ScreenCoordinate(x: point['x']!, y: point['y']!);
+    return ScreenCoordinate(x: point['x']!.toInt(), y: point['y']!.toInt());
   }
 
   @override
