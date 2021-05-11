@@ -394,7 +394,7 @@ class Convert {
     }
     final Object consumeTapEvents = data.get("consumeTapEvents");
     if (consumeTapEvents != null) {
-      sink.setConsumeTapEvents(toBoolean(consumeTapEvents));
+      sink.setConsumeTapEvents(!toBoolean(consumeTapEvents));
     }
     final Object draggable = data.get("draggable");
     if (draggable != null) {
