@@ -5,6 +5,7 @@
 package io.flutter.plugins.navermaps;
 
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.NaverMap;
 import com.naver.maps.model.BitmapDescriptor;
 import com.naver.maps.model.MarkerOptions;
 
@@ -83,5 +84,13 @@ class MarkerBuilder implements MarkerOptionsSink {
   @Override
   public void setZIndex(float zIndex) {
     markerOptions.zIndex(zIndex);
+  }
+
+  @Override
+  public void setRemove(boolean remove) {
+    if (!remove) {
+      return;
+    }
+    markerOptions.setMap(null);
   }
 }

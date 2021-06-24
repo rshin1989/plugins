@@ -22,6 +22,7 @@ class MarkersController {
     private final Context context;
     private final Map<String, MarkerController> markerIdToController;
     private final Map<String, String> naverMapsMarkerIdToDartMarkerId;
+    private final Map<String, Marker> hashedMarkerMap = new HashMap();
     private final MethodChannel methodChannel;
     private NaverMap naverMap;
 
@@ -66,6 +67,13 @@ class MarkersController {
                 markerController.remove();
                 naverMapsMarkerIdToDartMarkerId.remove(markerController.getNaverMapsMarkerId());
             }
+
+            if (hashedMarkerMap != null) {
+                if (hashedMarkerMap.containsKey(markerId)) {
+                    hashedMarkerMap.get(markerId).setMap(null);
+                }
+            }
+
         }
     }
 
@@ -150,6 +158,8 @@ class MarkersController {
         markerIdToController.put(markerId, controller);
         naverMapsMarkerIdToDartMarkerId.put(naverMarkerId, markerId);
         marker.setOnClickListener(overlay -> onMarkerTap(naverMarkerId));
+
+        hashedMarkerMap.put(markerId, marker);
     }
 
     private void changeMarker(Object marker) {

@@ -1,6 +1,7 @@
 package com.naver.maps.model;
 
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.NaverMap;
 
 public class MarkerOptions {
     private float alpha;
@@ -17,6 +18,7 @@ public class MarkerOptions {
     private float rotation;
     private boolean visible;
     private float zIndex;
+    private NaverMap map;
 
     public void alpha(float alpha) {
         this.alpha = alpha;
@@ -122,5 +124,9 @@ public class MarkerOptions {
 
     public float getZIndex() {
         return zIndex;
+    }
+
+    public void setMap(NaverMap map) {
+        this.map = map;
     }
 }

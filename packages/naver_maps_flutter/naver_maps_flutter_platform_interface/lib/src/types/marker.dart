@@ -144,6 +144,7 @@ class Marker implements MapsObject {
     this.infoWindow = InfoWindow.noText,
     this.position = const LatLng(0.0, 0.0),
     this.rotation = 0.0,
+    this.remove = false,
     this.visible = true,
     this.zIndex = 0.0,
     this.onTap,
@@ -197,6 +198,9 @@ class Marker implements MapsObject {
   /// True if the marker is visible.
   final bool visible;
 
+  /// True if the marker is remove from map
+  final bool remove;
+
   /// The z-index of the marker, used to determine relative drawing order of
   /// map overlays.
   ///
@@ -223,6 +227,7 @@ class Marker implements MapsObject {
     LatLng? positionParam,
     double? rotationParam,
     bool? visibleParam,
+    bool? removeParam,
     double? zIndexParam,
     VoidCallback? onTapParam,
     ValueChanged<LatLng>? onDragEndParam,
@@ -238,6 +243,7 @@ class Marker implements MapsObject {
       infoWindow: infoWindowParam ?? infoWindow,
       position: positionParam ?? position,
       rotation: rotationParam ?? rotation,
+      remove: removeParam ?? remove,
       visible: visibleParam ?? visible,
       zIndex: zIndexParam ?? zIndex,
       onTap: onTapParam ?? onTap,
@@ -268,6 +274,7 @@ class Marker implements MapsObject {
     addIfPresent('infoWindow', infoWindow._toJson());
     addIfPresent('position', position.toJson());
     addIfPresent('rotation', rotation);
+    addIfPresent('remove', remove);
     addIfPresent('visible', visible);
     addIfPresent('zIndex', zIndex);
     return json;
@@ -288,6 +295,7 @@ class Marker implements MapsObject {
         infoWindow == typedOther.infoWindow &&
         position == typedOther.position &&
         rotation == typedOther.rotation &&
+        remove == typedOther.remove &&
         visible == typedOther.visible &&
         zIndex == typedOther.zIndex;
   }
@@ -300,6 +308,6 @@ class Marker implements MapsObject {
     return 'Marker{markerId: $markerId, alpha: $alpha, anchor: $anchor, '
         'consumeTapEvents: $consumeTapEvents, draggable: $draggable, flat: $flat, '
         'icon: $icon, infoWindow: $infoWindow, position: $position, rotation: $rotation, '
-        'visible: $visible, zIndex: $zIndex, onTap: $onTap}';
+        'visible: $visible, remove: $remove, zIndex: $zIndex, onTap: $onTap}';
   }
 }

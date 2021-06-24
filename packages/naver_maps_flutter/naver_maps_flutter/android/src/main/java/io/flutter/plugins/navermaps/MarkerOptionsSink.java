@@ -5,6 +5,7 @@
 package io.flutter.plugins.navermaps;
 
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.NaverMap;
 import com.naver.maps.model.BitmapDescriptor;
 
 /** Receiver of Marker configuration options. */
@@ -28,6 +29,8 @@ interface MarkerOptionsSink {
   void setPosition(LatLng position);
 
   void setRotation(float rotation);
+
+  void setRemove(boolean remove);
 
   void setVisible(boolean visible);
 
