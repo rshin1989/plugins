@@ -344,6 +344,8 @@ abstract class NaverMapsFlutterPlatform extends PlatformInterface {
     PlatformViewCreatedCallback onPlatformViewCreated, {
     required CameraPosition initialCameraPosition,
     Set<Marker> markers = const <Marker>{},
+    Set<Marker> markersToRemove = const <Marker>{},
+    Set<Marker> markersToChange = const <Marker>{},
     Set<Polygon> polygons = const <Polygon>{},
     Set<Polyline> polylines = const <Polyline>{},
     Set<Circle> circles = const <Circle>{},

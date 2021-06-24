@@ -440,6 +440,8 @@ class MethodChannelNaverMapsFlutter extends NaverMapsFlutterPlatform {
     PlatformViewCreatedCallback onPlatformViewCreated, {
     required CameraPosition initialCameraPosition,
     Set<Marker> markers = const <Marker>{},
+    Set<Marker> markersToRemove = const <Marker>{},
+    Set<Marker> markersToChange = const <Marker>{},
     Set<Polygon> polygons = const <Polygon>{},
     Set<Polyline> polylines = const <Polyline>{},
     Set<Circle> circles = const <Circle>{},
@@ -451,6 +453,8 @@ class MethodChannelNaverMapsFlutter extends NaverMapsFlutterPlatform {
       'initialCameraPosition': initialCameraPosition.toMap(),
       'options': mapOptions,
       'markersToAdd': serializeMarkerSet(markers),
+      'markerIdsToRemove': serializeMarkerSet(markersToRemove),
+      'markersToChange': serializeMarkerSet(markersToChange),
       'polygonsToAdd': serializePolygonSet(polygons),
       'polylinesToAdd': serializePolylineSet(polylines),
       'circlesToAdd': serializeCircleSet(circles),
