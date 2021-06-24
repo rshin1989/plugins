@@ -22,7 +22,6 @@ class MarkersController {
     private final Context context;
     private final Map<String, MarkerController> markerIdToController;
     private final Map<String, String> naverMapsMarkerIdToDartMarkerId;
-    private final Map<String, Marker> hashedMarkerMap = new HashMap();
     private final MethodChannel methodChannel;
     private NaverMap naverMap;
 
@@ -62,18 +61,15 @@ class MarkersController {
                 continue;
             }
             String markerId = (String) rawMarkerId;
-            final MarkerController markerController = markerIdToController.remove(markerId);
-            if (markerController != null) {
-                markerController.remove();
-                naverMapsMarkerIdToDartMarkerId.remove(markerController.getNaverMapsMarkerId());
-            }
+            removeMarker(markerId);
+        }
+    }
 
-            if (hashedMarkerMap != null) {
-                if (hashedMarkerMap.containsKey(markerId)) {
-                    hashedMarkerMap.get(markerId).setMap(null);
-                }
-            }
-
+    void removeMarker(String markerId) {
+        final MarkerController markerController = markerIdToController.remove(markerId);
+        if (markerController != null) {
+            markerController.remove();
+            naverMapsMarkerIdToDartMarkerId.remove(markerController.getNaverMapsMarkerId());
         }
     }
 
@@ -145,7 +141,13 @@ class MarkersController {
         MarkerBuilder markerBuilder = new MarkerBuilder();
         String markerId = Convert.interpretMarkerOptions(marker, markerBuilder);
         MarkerOptions options = markerBuilder.build();
-        addMarker(markerId, options, markerBuilder.consumeTapEvents());
+
+        if (options.isRemove()) {
+            removeMarker(markerId);
+        } else {
+            addMarker(markerId, options, markerBuilder.consumeTapEvents());
+        }
+
     }
 
     private void addMarker(String markerId, MarkerOptions markerOptions, boolean consumeTapEvents) {
@@ -158,8 +160,6 @@ class MarkersController {
         markerIdToController.put(markerId, controller);
         naverMapsMarkerIdToDartMarkerId.put(naverMarkerId, markerId);
         marker.setOnClickListener(overlay -> onMarkerTap(naverMarkerId));
-
-        hashedMarkerMap.put(markerId, marker);
     }
 
     private void changeMarker(Object marker) {

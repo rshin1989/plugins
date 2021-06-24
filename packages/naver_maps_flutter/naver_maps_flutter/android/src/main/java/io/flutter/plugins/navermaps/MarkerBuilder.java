@@ -88,9 +88,6 @@ class MarkerBuilder implements MarkerOptionsSink {
 
   @Override
   public void setRemove(boolean remove) {
-    if (!remove) {
-      return;
-    }
-    markerOptions.setMap(null);
+    markerOptions.remove(remove);
   }
 }

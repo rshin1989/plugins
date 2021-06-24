@@ -126,6 +126,14 @@ class MarkerController implements MarkerOptionsSink {
   }
 
   @Override
+  public void setRemove(boolean remove) {
+    if (!remove) {
+      return;
+    }
+    marker.setMap(null);
+  }
+
+  @Override
   public void setVisible(boolean visible) {
     marker.setVisible(visible);
   }

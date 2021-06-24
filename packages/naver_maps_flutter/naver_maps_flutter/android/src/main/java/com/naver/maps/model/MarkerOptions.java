@@ -1,7 +1,6 @@
 package com.naver.maps.model;
 
 import com.naver.maps.geometry.LatLng;
-import com.naver.maps.map.NaverMap;
 
 public class MarkerOptions {
     private float alpha;
@@ -17,8 +16,8 @@ public class MarkerOptions {
     private LatLng position;
     private float rotation;
     private boolean visible;
+    private boolean remove;
     private float zIndex;
-    private NaverMap map;
 
     public void alpha(float alpha) {
         this.alpha = alpha;
@@ -118,15 +117,17 @@ public class MarkerOptions {
         return visible;
     }
 
+    public void remove(boolean remove) { this.remove = remove; }
+
+    public boolean isRemove() {
+        return remove;
+    }
+
     public void zIndex(float zIndex) {
         this.zIndex = zIndex;
     }
 
     public float getZIndex() {
         return zIndex;
-    }
-
-    public void setMap(NaverMap map) {
-        this.map = map;
     }
 }
