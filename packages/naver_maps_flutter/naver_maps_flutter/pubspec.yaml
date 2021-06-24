@@ -1,7 +1,7 @@
 name: naver_maps_flutter
 description: A Flutter plugin for integrating Kakao Maps in iOS and Android applications.
 homepage: https://github.com/clearmaps/plugins/tree/master/packages/naver_maps_flutter/naver_maps_flutter
-version: 1.1.0+21062301
+version: 1.2.0+21062401
 
 dependencies:
   flutter:
