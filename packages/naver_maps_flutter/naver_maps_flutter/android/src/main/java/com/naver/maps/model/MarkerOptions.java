@@ -16,7 +16,6 @@ public class MarkerOptions {
     private LatLng position;
     private float rotation;
     private boolean visible;
-    private boolean remove;
     private float zIndex;
 
     public void alpha(float alpha) {
@@ -115,12 +114,6 @@ public class MarkerOptions {
 
     public boolean isVisible() {
         return visible;
-    }
-
-    public void remove(boolean remove) { this.remove = remove; }
-
-    public boolean isRemove() {
-        return remove;
     }
 
     public void zIndex(float zIndex) {

@@ -23,13 +23,17 @@ import com.naver.maps.model.BitmapDescriptor;
 /** Controller of a single Marker on the map. */
 class MarkerController implements MarkerOptionsSink {
   private final Context context;
-  private final Marker marker;
+  public final Marker marker;
   private final String naverMapsMarkerId;
   private boolean consumeTapEvents;
   private final InfoWindow infoWindow;
 
   private String infoWindowTitle;
   private String infoWindowSnippet;
+
+  Marker getMarker() {
+    return marker;
+  }
 
   MarkerController(Context context, Marker marker, boolean consumeTapEvents) {
     this.context = context;
@@ -123,14 +127,6 @@ class MarkerController implements MarkerOptionsSink {
   @Override
   public void setRotation(float rotation) {
     marker.setAngle(rotation);
-  }
-
-  @Override
-  public void setRemove(boolean remove) {
-    if (!remove) {
-      return;
-    }
-    marker.setMap(null);
   }
 
   @Override

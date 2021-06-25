@@ -37,6 +37,17 @@ class MarkersController {
     }
 
     void addMarkers(List<Object> markersToAdd) {
+        Log.d("NaverMap", "[MarkersController] ==============================================");
+        Log.d("NaverMap", "[MarkersController] addMarkers: " + markersToAdd.size());
+
+        for(String key: naverMapsMarkerIdToDartMarkerId.keySet()) {
+            Log.d("NaverMap", "naverMapsMarkerIdToDartMarkerId: " + key + " " + naverMapsMarkerIdToDartMarkerId.get(key));
+        }
+
+        for(String key: markerIdToController.keySet()) {
+            Log.d("NaverMap", "markerIdToController: " + key + " " + markerIdToController.get(key).marker.getMap());
+        }
+        Log.d("NaverMap", "[MarkersController] ==============================================");
         if (markersToAdd != null) {
             for (Object markerToAdd : markersToAdd) {
                 addMarker(markerToAdd);
@@ -45,6 +56,8 @@ class MarkersController {
     }
 
     void changeMarkers(List<Object> markersToChange) {
+        Log.d("NaverMap", "[MarkersController] ==============================================");
+        Log.d("NaverMap", "[MarkersController] changeMarkers: " + markersToChange.size());
         if (markersToChange != null) {
             for (Object markerToChange : markersToChange) {
                 changeMarker(markerToChange);
@@ -53,6 +66,8 @@ class MarkersController {
     }
 
     void removeMarkers(List<Object> markerIdsToRemove) {
+        Log.d("NaverMap", "[MarkersController] ==============================================");
+        Log.d("NaverMap", "[MarkersController] removeMarkers: " + markerIdsToRemove.size());
         if (markerIdsToRemove == null) {
             return;
         }
@@ -66,6 +81,7 @@ class MarkersController {
     }
 
     void removeMarker(String markerId) {
+        Log.d("NaverMap", "[MarkersController] removeMarker: " + markerId);
         final MarkerController markerController = markerIdToController.remove(markerId);
         if (markerController != null) {
             markerController.remove();
@@ -74,6 +90,7 @@ class MarkersController {
     }
 
     void showMarkerInfoWindow(String markerId, MethodChannel.Result result) {
+        Log.d("NaverMap", "[MarkersController] showMarkerInfoWindow: " + markerId);
         MarkerController markerController = markerIdToController.get(markerId);
         if (markerController != null) {
             markerController.showInfoWindow(naverMap);
@@ -140,14 +157,10 @@ class MarkersController {
         }
         MarkerBuilder markerBuilder = new MarkerBuilder();
         String markerId = Convert.interpretMarkerOptions(marker, markerBuilder);
+        Log.d("NaverMap", "addMarker: " + markerId);
         MarkerOptions options = markerBuilder.build();
 
-        if (options.isRemove()) {
-            removeMarker(markerId);
-        } else {
-            addMarker(markerId, options, markerBuilder.consumeTapEvents());
-        }
-
+        addMarker(markerId, options, markerBuilder.consumeTapEvents());
     }
 
     private void addMarker(String markerId, MarkerOptions markerOptions, boolean consumeTapEvents) {

@@ -12,6 +12,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>naver_maps_flutter_example</string>
+	<key>NMFClientId</key>
+	<string>JzGMdoduo5zdrI3QdPzZomnMasL0k2y8O1b1IwYE</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

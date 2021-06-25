@@ -247,8 +247,6 @@ class _NaverMapState extends State<NaverMap> {
       Completer<NaverMapController>();
 
   Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
-  Map<MarkerId, Marker> _markersToRemove = <MarkerId, Marker>{};
-  Map<MarkerId, Marker> _markersToChange = <MarkerId, Marker>{};
   Map<PolygonId, Polygon> _polygons = <PolygonId, Polygon>{};
   Map<PolylineId, Polyline> _polylines = <PolylineId, Polyline>{};
   Map<CircleId, Circle> _circles = <CircleId, Circle>{};
@@ -261,8 +259,6 @@ class _NaverMapState extends State<NaverMap> {
       onPlatformViewCreated,
       initialCameraPosition: widget.initialCameraPosition,
       markers: widget.markers,
-      markersToRemove: widget.markersToRemove,
-      markersToChange: widget.markersToChange,
       polygons: widget.polygons,
       polylines: widget.polylines,
       circles: widget.circles,
@@ -276,8 +272,6 @@ class _NaverMapState extends State<NaverMap> {
     super.initState();
     _naverMapOptions = _NaverMapOptions.fromWidget(widget);
     _markers = keyByMarkerId(widget.markers);
-    _markersToChange = keyByMarkerId(widget.markersToChange);
-    _markersToRemove = keyByMarkerId(widget.markersToRemove);
     _polygons = keyByPolygonId(widget.polygons);
     _polylines = keyByPolylineId(widget.polylines);
     _circles = keyByCircleId(widget.circles);

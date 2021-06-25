@@ -421,10 +421,6 @@ class Convert {
     if (rotation != null) {
       sink.setRotation(toFloat(rotation));
     }
-    final Object remove = data.get("remove");
-    if (remove != null) {
-      sink.setRemove(toBoolean(remove));
-    }
     final Object visible = data.get("visible");
     if (visible != null) {
       sink.setVisible(toBoolean(visible));

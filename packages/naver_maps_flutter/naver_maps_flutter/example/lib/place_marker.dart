@@ -33,6 +33,7 @@ typedef Marker MarkerUpdateAction(Marker marker);
 
 class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
   PlaceMarkerBodyState();
+
   static final LatLng center = const LatLng(37.5670135, 126.9783740);
 
   NaverMapController? controller;
@@ -100,6 +101,7 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
     final int markerCount = markers.length;
 
     if (markerCount == 12) {
+      _markerIdCounter = 0;
       return;
     }
 
@@ -285,6 +287,7 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
   @override
   Widget build(BuildContext context) {
     final MarkerId? selectedId = selectedMarker;
+    print('markers.values: ${markers.values.toString()}');
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -321,6 +324,14 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
                           onPressed: selectedId == null
                               ? null
                               : () => _remove(selectedId),
+                        ),
+                        TextButton(
+                          child: const Text('remove markers'),
+                          onPressed: () {
+                                  setState(() {
+                                    markers.clear();
+                                  });
+                                },
                         ),
                         TextButton(
                           child: const Text('change info'),

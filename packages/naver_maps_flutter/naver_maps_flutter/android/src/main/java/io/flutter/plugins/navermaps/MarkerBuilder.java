@@ -85,9 +85,4 @@ class MarkerBuilder implements MarkerOptionsSink {
   public void setZIndex(float zIndex) {
     markerOptions.zIndex(zIndex);
   }
-
-  @Override
-  public void setRemove(boolean remove) {
-    markerOptions.remove(remove);
-  }
 }
