@@ -41,7 +41,7 @@ Specify your API key in the application delegate `ios/Runner/AppDelegate.m`:
 ```objectivec
 #include "AppDelegate.h"
 #include "GeneratedPluginRegistrant.h"
-#import "GoogleMaps/GoogleMaps.h"
+#import "NaverMaps/NaverMaps.h"
 
 @implementation AppDelegate
 
@@ -59,7 +59,7 @@ Or in your swift code, specify your API key in the application delegate `ios/Run
 ```swift
 import UIKit
 import Flutter
-import GoogleMaps
+import NaverMaps
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -76,10 +76,10 @@ import GoogleMaps
 
 ### Both
 
-You can now add a `GoogleMap` widget to your widget tree.
+You can now add a `NaverMap` widget to your widget tree.
 
-The map view can be controlled with the `GoogleMapController` that is passed to
-the `GoogleMap`'s `onMapCreated` callback.
+The map view can be controlled with the `NaverMapController` that is passed to
+the `NaverMap`'s `onMapCreated` callback.
 
 ### Sample Usage
 
@@ -107,7 +107,7 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  Completer<GoogleMapController> _controller = Completer();
+  Completer<NaverMapController> _controller = Completer();
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -123,10 +123,10 @@ class MapSampleState extends State<MapSample> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: GoogleMap(
+      body: NaverMap(
         mapType: MapType.hybrid,
         initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
+        onMapCreated: (NaverMapController controller) {
           _controller.complete(controller);
         },
       ),
@@ -139,7 +139,7 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
+    final NaverMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }

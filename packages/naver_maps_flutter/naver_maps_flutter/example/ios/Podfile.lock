@@ -4,11 +4,18 @@ PODS:
     - Flutter
   - naver_maps_flutter (0.0.1):
     - Flutter
+    - NMapsMap
+  - NMapsMap (3.13.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - naver_maps_flutter (from `.symlinks/plugins/naver_maps_flutter/ios`)
+  - NMapsMap
+
+SPEC REPOS:
+  trunk:
+    - NMapsMap
 
 EXTERNAL SOURCES:
   Flutter:
@@ -21,8 +28,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   integration_test: 5ed24a436eb7ec17b6a13046e9bf7ca4a404e59e
-  naver_maps_flutter: 29af3f63467638e5e870997aa093030f5d118892
+  naver_maps_flutter: 8bb67d7069a8c4fc0875cc77cac1f3af85dda218
+  NMapsMap: 88b5bdac7087bfa99ab058ff5cdd95fb766e0e95
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: b908b2f391ec431c126392259195f6738a81b1f2
 
 COCOAPODS: 1.10.1

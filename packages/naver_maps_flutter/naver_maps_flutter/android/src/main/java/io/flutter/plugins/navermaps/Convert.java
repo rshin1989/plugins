@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Conversions between JSON-like values and GoogleMaps data types. */
+/** Conversions between JSON-like values and NaverMaps data types. */
 class Convert {
 
   // TODO(hamdikahloun): FlutterMain has been deprecated and should be replaced with FlutterLoader

@@ -3,10 +3,10 @@
 // found in the LICENSE file.
 
 #import <Flutter/Flutter.h>
-#import <GoogleMaps/GoogleMaps.h>
+#import <NMapsMap/NMapsMap.h>
 
 // Defines circle UI options writable from Flutter.
-@protocol FLTGoogleMapCircleOptionsSink
+@protocol FLTNaverMapCircleOptionsSink
 - (void)setConsumeTapEvents:(BOOL)consume;
 - (void)setVisible:(BOOL)visible;
 - (void)setStrokeColor:(UIColor*)color;
@@ -18,18 +18,18 @@
 @end
 
 // Defines circle controllable by Flutter.
-@interface FLTGoogleMapCircleController : NSObject <FLTGoogleMapCircleOptionsSink>
+@interface FLTNaverMapCircleController : NSObject <FLTNaverMapCircleOptionsSink>
 @property(atomic, readonly) NSString* circleId;
 - (instancetype)initCircleWithPosition:(CLLocationCoordinate2D)position
                                 radius:(CLLocationDistance)radius
                               circleId:(NSString*)circleId
-                               mapView:(GMSMapView*)mapView;
+                               mapView:(NMFMapView*)mapView;
 - (void)removeCircle;
 @end
 
 @interface FLTCirclesController : NSObject
 - (instancetype)init:(FlutterMethodChannel*)methodChannel
-             mapView:(GMSMapView*)mapView
+             mapView:(NMFMapView*)mapView
            registrar:(NSObject<FlutterPluginRegistrar>*)registrar;
 - (void)addCircles:(NSArray*)circlesToAdd;
 - (void)changeCircles:(NSArray*)circlesToChange;

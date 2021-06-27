@@ -72,7 +72,7 @@ class PolygonController implements PolygonOptionsSink {
     polygon.setZIndex(zIndex);
   }
 
-  String getGoogleMapsPolygonId() {
+  String getNaverMapsPolygonId() {
     return googleMapsPolygonId;
   }
 

@@ -3,10 +3,10 @@
 // found in the LICENSE file.
 
 #import <Flutter/Flutter.h>
-#import <GoogleMaps/GoogleMaps.h>
+#import <NMapsMap/NMapsMap.h>
 
 // Defines polyline UI options writable from Flutter.
-@protocol FLTGoogleMapPolylineOptionsSink
+@protocol FLTNaverMapPolylineOptionsSink
 - (void)setConsumeTapEvents:(BOOL)consume;
 - (void)setVisible:(BOOL)visible;
 - (void)setColor:(UIColor*)color;
@@ -17,11 +17,11 @@
 @end
 
 // Defines polyline controllable by Flutter.
-@interface FLTGoogleMapPolylineController : NSObject <FLTGoogleMapPolylineOptionsSink>
+@interface FLTNaverMapPolylineController : NSObject <FLTNaverMapPolylineOptionsSink>
 @property(atomic, readonly) NSString* polylineId;
-- (instancetype)initPolylineWithPath:(GMSMutablePath*)path
+- (instancetype)initPolylineWithPath:(NMFPath*)path
                           polylineId:(NSString*)polylineId
-                             mapView:(GMSMapView*)mapView;
+                             mapView:(NMFMapView*)mapView;
 - (void)removePolyline;
 @end
 

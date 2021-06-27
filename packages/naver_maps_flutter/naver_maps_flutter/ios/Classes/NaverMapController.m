@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "GoogleMapController.h"
-#import "FLTGoogleMapTileOverlayController.h"
+#import "NaverMapController.h"
+#import "FLTNaverMapTileOverlayController.h"
 #import "JsonConversions.h"
 
 #pragma mark - Conversion of JSON-like values sent via platform channels. Forward declarations.
@@ -16,10 +16,10 @@ static GMSCameraPosition* ToOptionalCameraPosition(NSDictionary* json);
 static GMSCoordinateBounds* ToOptionalBounds(NSArray* json);
 static GMSCameraUpdate* ToCameraUpdate(NSArray* data);
 static NSDictionary* GMSCoordinateBoundsToJson(GMSCoordinateBounds* bounds);
-static void InterpretMapOptions(NSDictionary* data, id<FLTGoogleMapOptionsSink> sink);
-static double ToDouble(NSNumber* data) { return [FLTGoogleMapJsonConversions toDouble:data]; }
+static void InterpretMapOptions(NSDictionary* data, id<FLTNaverMapOptionsSink> sink);
+static double ToDouble(NSNumber* data) { return [FLTNaverMapJsonConversions toDouble:data]; }
 
-@implementation FLTGoogleMapFactory {
+@implementation FLTNaverMapFactory {
   NSObject<FlutterPluginRegistrar>* _registrar;
 }
 
@@ -38,14 +38,14 @@ static double ToDouble(NSNumber* data) { return [FLTGoogleMapJsonConversions toD
 - (NSObject<FlutterPlatformView>*)createWithFrame:(CGRect)frame
                                    viewIdentifier:(int64_t)viewId
                                         arguments:(id _Nullable)args {
-  return [[FLTGoogleMapController alloc] initWithFrame:frame
+  return [[FLTNaverMapController alloc] initWithFrame:frame
                                         viewIdentifier:viewId
                                              arguments:args
                                              registrar:_registrar];
 }
 @end
 
-@implementation FLTGoogleMapController {
+@implementation FLTNaverMapController {
   GMSMapView* _mapView;
   int64_t _viewId;
   FlutterMethodChannel* _channel;
@@ -177,17 +177,17 @@ static double ToDouble(NSNumber* data) { return [FLTGoogleMapJsonConversions toD
 
       result(GMSCoordinateBoundsToJson(bounds));
     } else {
-      result([FlutterError errorWithCode:@"GoogleMap uninitialized"
+      result([FlutterError errorWithCode:@"NaverMap uninitialized"
                                  message:@"getVisibleRegion called prior to map initialization"
                                  details:nil]);
     }
   } else if ([call.method isEqualToString:@"map#getScreenCoordinate"]) {
     if (_mapView != nil) {
-      CLLocationCoordinate2D location = [FLTGoogleMapJsonConversions toLocation:call.arguments];
+      CLLocationCoordinate2D location = [FLTNaverMapJsonConversions toLocation:call.arguments];
       CGPoint point = [_mapView.projection pointForCoordinate:location];
       result(PointToJson(point));
     } else {
-      result([FlutterError errorWithCode:@"GoogleMap uninitialized"
+      result([FlutterError errorWithCode:@"NaverMap uninitialized"
                                  message:@"getScreenCoordinate called prior to map initialization"
                                  details:nil]);
     }
@@ -197,7 +197,7 @@ static double ToDouble(NSNumber* data) { return [FLTGoogleMapJsonConversions toD
       CLLocationCoordinate2D latlng = [_mapView.projection coordinateForPoint:point];
       result(LocationToJson(latlng));
     } else {
-      result([FlutterError errorWithCode:@"GoogleMap uninitialized"
+      result([FlutterError errorWithCode:@"NaverMap uninitialized"
                                  message:@"getLatLng called prior to map initialization"
                                  details:nil]);
     }
@@ -216,7 +216,7 @@ static double ToDouble(NSNumber* data) { return [FLTGoogleMapJsonConversions toD
         }];
         result([FlutterStandardTypedData typedDataWithBytes:UIImagePNGRepresentation(image)]);
       } else {
-        result([FlutterError errorWithCode:@"GoogleMap uninitialized"
+        result([FlutterError errorWithCode:@"NaverMap uninitialized"
                                    message:@"takeSnapshot called prior to map initialization"
                                    details:nil]);
       }
@@ -402,7 +402,7 @@ static double ToDouble(NSNumber* data) { return [FLTGoogleMapJsonConversions toD
   }
 }
 
-#pragma mark - FLTGoogleMapOptionsSink methods
+#pragma mark - FLTNaverMapOptionsSink methods
 
 - (void)setCamera:(GMSCameraPosition*)camera {
   _mapView.camera = camera;
@@ -569,17 +569,17 @@ static NSDictionary* GMSCoordinateBoundsToJson(GMSCoordinateBounds* bounds) {
   };
 }
 
-static float ToFloat(NSNumber* data) { return [FLTGoogleMapJsonConversions toFloat:data]; }
+static float ToFloat(NSNumber* data) { return [FLTNaverMapJsonConversions toFloat:data]; }
 
 static CLLocationCoordinate2D ToLocation(NSArray* data) {
-  return [FLTGoogleMapJsonConversions toLocation:data];
+  return [FLTNaverMapJsonConversions toLocation:data];
 }
 
-static int ToInt(NSNumber* data) { return [FLTGoogleMapJsonConversions toInt:data]; }
+static int ToInt(NSNumber* data) { return [FLTNaverMapJsonConversions toInt:data]; }
 
-static BOOL ToBool(NSNumber* data) { return [FLTGoogleMapJsonConversions toBool:data]; }
+static BOOL ToBool(NSNumber* data) { return [FLTNaverMapJsonConversions toBool:data]; }
 
-static CGPoint ToPoint(NSArray* data) { return [FLTGoogleMapJsonConversions toPoint:data]; }
+static CGPoint ToPoint(NSArray* data) { return [FLTNaverMapJsonConversions toPoint:data]; }
 
 static GMSCameraPosition* ToCameraPosition(NSDictionary* data) {
   return [GMSCameraPosition cameraWithTarget:ToLocation(data[@"target"])
@@ -640,7 +640,7 @@ static GMSCameraUpdate* ToCameraUpdate(NSArray* data) {
   return nil;
 }
 
-static void InterpretMapOptions(NSDictionary* data, id<FLTGoogleMapOptionsSink> sink) {
+static void InterpretMapOptions(NSDictionary* data, id<FLTNaverMapOptionsSink> sink) {
   NSArray* cameraTargetBounds = data[@"cameraTargetBounds"];
   if (cameraTargetBounds) {
     [sink setCameraTargetBounds:ToOptionalBounds(cameraTargetBounds)];

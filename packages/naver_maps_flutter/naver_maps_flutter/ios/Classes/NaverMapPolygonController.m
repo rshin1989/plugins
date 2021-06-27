@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "GoogleMapPolygonController.h"
+#import "NaverMapPolygonController.h"
 #import "JsonConversions.h"
 
-@implementation FLTGoogleMapPolygonController {
+@implementation FLTNaverMapPolygonController {
   GMSPolygon* _polygon;
   GMSMapView* _mapView;
 }
@@ -26,7 +26,7 @@
   _polygon.map = nil;
 }
 
-#pragma mark - FLTGoogleMapPolygonOptionsSink methods
+#pragma mark - FLTNaverMapPolygonOptionsSink methods
 
 - (void)setConsumeTapEvents:(BOOL)consumes {
   _polygon.tappable = consumes;
@@ -70,21 +70,21 @@
 }
 @end
 
-static int ToInt(NSNumber* data) { return [FLTGoogleMapJsonConversions toInt:data]; }
+static int ToInt(NSNumber* data) { return [FLTNaverMapJsonConversions toInt:data]; }
 
-static BOOL ToBool(NSNumber* data) { return [FLTGoogleMapJsonConversions toBool:data]; }
+static BOOL ToBool(NSNumber* data) { return [FLTNaverMapJsonConversions toBool:data]; }
 
 static NSArray<CLLocation*>* ToPoints(NSArray* data) {
-  return [FLTGoogleMapJsonConversions toPoints:data];
+  return [FLTNaverMapJsonConversions toPoints:data];
 }
 
 static NSArray<NSArray<CLLocation*>*>* ToHoles(NSArray<NSArray*>* data) {
-  return [FLTGoogleMapJsonConversions toHoles:data];
+  return [FLTNaverMapJsonConversions toHoles:data];
 }
 
-static UIColor* ToColor(NSNumber* data) { return [FLTGoogleMapJsonConversions toColor:data]; }
+static UIColor* ToColor(NSNumber* data) { return [FLTNaverMapJsonConversions toColor:data]; }
 
-static void InterpretPolygonOptions(NSDictionary* data, id<FLTGoogleMapPolygonOptionsSink> sink,
+static void InterpretPolygonOptions(NSDictionary* data, id<FLTNaverMapPolygonOptionsSink> sink,
                                     NSObject<FlutterPluginRegistrar>* registrar) {
   NSNumber* consumeTapEvents = data[@"consumeTapEvents"];
   if (consumeTapEvents != nil) {
@@ -149,8 +149,8 @@ static void InterpretPolygonOptions(NSDictionary* data, id<FLTGoogleMapPolygonOp
   for (NSDictionary* polygon in polygonsToAdd) {
     GMSMutablePath* path = [FLTPolygonsController getPath:polygon];
     NSString* polygonId = [FLTPolygonsController getPolygonId:polygon];
-    FLTGoogleMapPolygonController* controller =
-        [[FLTGoogleMapPolygonController alloc] initPolygonWithPath:path
+    FLTNaverMapPolygonController* controller =
+        [[FLTNaverMapPolygonController alloc] initPolygonWithPath:path
                                                          polygonId:polygonId
                                                            mapView:_mapView];
     InterpretPolygonOptions(polygon, controller, _registrar);
@@ -160,7 +160,7 @@ static void InterpretPolygonOptions(NSDictionary* data, id<FLTGoogleMapPolygonOp
 - (void)changePolygons:(NSArray*)polygonsToChange {
   for (NSDictionary* polygon in polygonsToChange) {
     NSString* polygonId = [FLTPolygonsController getPolygonId:polygon];
-    FLTGoogleMapPolygonController* controller = _polygonIdToController[polygonId];
+    FLTNaverMapPolygonController* controller = _polygonIdToController[polygonId];
     if (!controller) {
       continue;
     }
@@ -172,7 +172,7 @@ static void InterpretPolygonOptions(NSDictionary* data, id<FLTGoogleMapPolygonOp
     if (!polygonId) {
       continue;
     }
-    FLTGoogleMapPolygonController* controller = _polygonIdToController[polygonId];
+    FLTNaverMapPolygonController* controller = _polygonIdToController[polygonId];
     if (!controller) {
       continue;
     }
@@ -184,7 +184,7 @@ static void InterpretPolygonOptions(NSDictionary* data, id<FLTGoogleMapPolygonOp
   if (!polygonId) {
     return;
   }
-  FLTGoogleMapPolygonController* controller = _polygonIdToController[polygonId];
+  FLTNaverMapPolygonController* controller = _polygonIdToController[polygonId];
   if (!controller) {
     return;
   }

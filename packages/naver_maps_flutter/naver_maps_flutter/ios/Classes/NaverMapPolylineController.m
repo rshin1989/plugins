@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "GoogleMapPolylineController.h"
+#import "NaverMapPolylineController.h"
 #import "JsonConversions.h"
 
-@implementation FLTGoogleMapPolylineController {
+@implementation FLTNaverMapPolylineController {
   GMSPolyline* _polyline;
   GMSMapView* _mapView;
 }
@@ -26,7 +26,7 @@
   _polyline.map = nil;
 }
 
-#pragma mark - FLTGoogleMapPolylineOptionsSink methods
+#pragma mark - FLTNaverMapPolylineOptionsSink methods
 
 - (void)setConsumeTapEvents:(BOOL)consumes {
   _polyline.tappable = consumes;
@@ -58,17 +58,17 @@
 }
 @end
 
-static int ToInt(NSNumber* data) { return [FLTGoogleMapJsonConversions toInt:data]; }
+static int ToInt(NSNumber* data) { return [FLTNaverMapJsonConversions toInt:data]; }
 
-static BOOL ToBool(NSNumber* data) { return [FLTGoogleMapJsonConversions toBool:data]; }
+static BOOL ToBool(NSNumber* data) { return [FLTNaverMapJsonConversions toBool:data]; }
 
 static NSArray<CLLocation*>* ToPoints(NSArray* data) {
-  return [FLTGoogleMapJsonConversions toPoints:data];
+  return [FLTNaverMapJsonConversions toPoints:data];
 }
 
-static UIColor* ToColor(NSNumber* data) { return [FLTGoogleMapJsonConversions toColor:data]; }
+static UIColor* ToColor(NSNumber* data) { return [FLTNaverMapJsonConversions toColor:data]; }
 
-static void InterpretPolylineOptions(NSDictionary* data, id<FLTGoogleMapPolylineOptionsSink> sink,
+static void InterpretPolylineOptions(NSDictionary* data, id<FLTNaverMapPolylineOptionsSink> sink,
                                      NSObject<FlutterPluginRegistrar>* registrar) {
   NSNumber* consumeTapEvents = data[@"consumeTapEvents"];
   if (consumeTapEvents != nil) {
@@ -128,8 +128,8 @@ static void InterpretPolylineOptions(NSDictionary* data, id<FLTGoogleMapPolyline
   for (NSDictionary* polyline in polylinesToAdd) {
     GMSMutablePath* path = [FLTPolylinesController getPath:polyline];
     NSString* polylineId = [FLTPolylinesController getPolylineId:polyline];
-    FLTGoogleMapPolylineController* controller =
-        [[FLTGoogleMapPolylineController alloc] initPolylineWithPath:path
+    FLTNaverMapPolylineController* controller =
+        [[FLTNaverMapPolylineController alloc] initPolylineWithPath:path
                                                           polylineId:polylineId
                                                              mapView:_mapView];
     InterpretPolylineOptions(polyline, controller, _registrar);
@@ -139,7 +139,7 @@ static void InterpretPolylineOptions(NSDictionary* data, id<FLTGoogleMapPolyline
 - (void)changePolylines:(NSArray*)polylinesToChange {
   for (NSDictionary* polyline in polylinesToChange) {
     NSString* polylineId = [FLTPolylinesController getPolylineId:polyline];
-    FLTGoogleMapPolylineController* controller = _polylineIdToController[polylineId];
+    FLTNaverMapPolylineController* controller = _polylineIdToController[polylineId];
     if (!controller) {
       continue;
     }
@@ -151,7 +151,7 @@ static void InterpretPolylineOptions(NSDictionary* data, id<FLTGoogleMapPolyline
     if (!polylineId) {
       continue;
     }
-    FLTGoogleMapPolylineController* controller = _polylineIdToController[polylineId];
+    FLTNaverMapPolylineController* controller = _polylineIdToController[polylineId];
     if (!controller) {
       continue;
     }
@@ -163,7 +163,7 @@ static void InterpretPolylineOptions(NSDictionary* data, id<FLTGoogleMapPolyline
   if (!polylineId) {
     return;
   }
-  FLTGoogleMapPolylineController* controller = _polylineIdToController[polylineId];
+  FLTNaverMapPolylineController* controller = _polylineIdToController[polylineId];
   if (!controller) {
     return;
   }

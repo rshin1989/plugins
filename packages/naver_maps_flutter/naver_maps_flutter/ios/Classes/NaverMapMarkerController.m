@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "GoogleMapMarkerController.h"
+#import "NaverMapMarkerController.h"
 #import "JsonConversions.h"
 
 static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray* icon);
-static void InterpretInfoWindow(id<FLTGoogleMapMarkerOptionsSink> sink, NSDictionary* data);
+static void InterpretInfoWindow(id<FLTNaverMapMarkerOptionsSink> sink, NSDictionary* data);
 
-@implementation FLTGoogleMapMarkerController {
+@implementation FLTNaverMapMarkerController {
   GMSMarker* _marker;
   GMSMapView* _mapView;
   BOOL _consumeTapEvents;
@@ -44,7 +44,7 @@ static void InterpretInfoWindow(id<FLTGoogleMapMarkerOptionsSink> sink, NSDictio
   _marker.map = nil;
 }
 
-#pragma mark - FLTGoogleMapMarkerOptionsSink methods
+#pragma mark - FLTNaverMapMarkerOptionsSink methods
 
 - (void)setAlpha:(float)alpha {
   _marker.opacity = alpha;
@@ -85,25 +85,25 @@ static void InterpretInfoWindow(id<FLTGoogleMapMarkerOptionsSink> sink, NSDictio
 }
 @end
 
-static double ToDouble(NSNumber* data) { return [FLTGoogleMapJsonConversions toDouble:data]; }
+static double ToDouble(NSNumber* data) { return [FLTNaverMapJsonConversions toDouble:data]; }
 
-static float ToFloat(NSNumber* data) { return [FLTGoogleMapJsonConversions toFloat:data]; }
+static float ToFloat(NSNumber* data) { return [FLTNaverMapJsonConversions toFloat:data]; }
 
 static CLLocationCoordinate2D ToLocation(NSArray* data) {
-  return [FLTGoogleMapJsonConversions toLocation:data];
+  return [FLTNaverMapJsonConversions toLocation:data];
 }
 
-static int ToInt(NSNumber* data) { return [FLTGoogleMapJsonConversions toInt:data]; }
+static int ToInt(NSNumber* data) { return [FLTNaverMapJsonConversions toInt:data]; }
 
-static BOOL ToBool(NSNumber* data) { return [FLTGoogleMapJsonConversions toBool:data]; }
+static BOOL ToBool(NSNumber* data) { return [FLTNaverMapJsonConversions toBool:data]; }
 
-static CGPoint ToPoint(NSArray* data) { return [FLTGoogleMapJsonConversions toPoint:data]; }
+static CGPoint ToPoint(NSArray* data) { return [FLTNaverMapJsonConversions toPoint:data]; }
 
 static NSArray* PositionToJson(CLLocationCoordinate2D data) {
-  return [FLTGoogleMapJsonConversions positionToJson:data];
+  return [FLTNaverMapJsonConversions positionToJson:data];
 }
 
-static void InterpretMarkerOptions(NSDictionary* data, id<FLTGoogleMapMarkerOptionsSink> sink,
+static void InterpretMarkerOptions(NSDictionary* data, id<FLTNaverMapMarkerOptionsSink> sink,
                                    NSObject<FlutterPluginRegistrar>* registrar) {
   NSNumber* alpha = data[@"alpha"];
   if (alpha != nil) {
@@ -149,7 +149,7 @@ static void InterpretMarkerOptions(NSDictionary* data, id<FLTGoogleMapMarkerOpti
   }
 }
 
-static void InterpretInfoWindow(id<FLTGoogleMapMarkerOptionsSink> sink, NSDictionary* data) {
+static void InterpretInfoWindow(id<FLTNaverMapMarkerOptionsSink> sink, NSDictionary* data) {
   NSDictionary* infoWindow = data[@"infoWindow"];
   if (infoWindow) {
     NSString* title = infoWindow[@"title"];
@@ -253,8 +253,8 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
   for (NSDictionary* marker in markersToAdd) {
     CLLocationCoordinate2D position = [FLTMarkersController getPosition:marker];
     NSString* markerId = [FLTMarkersController getMarkerId:marker];
-    FLTGoogleMapMarkerController* controller =
-        [[FLTGoogleMapMarkerController alloc] initMarkerWithPosition:position
+    FLTNaverMapMarkerController* controller =
+        [[FLTNaverMapMarkerController alloc] initMarkerWithPosition:position
                                                             markerId:markerId
                                                              mapView:_mapView];
     InterpretMarkerOptions(marker, controller, _registrar);
@@ -264,7 +264,7 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
 - (void)changeMarkers:(NSArray*)markersToChange {
   for (NSDictionary* marker in markersToChange) {
     NSString* markerId = [FLTMarkersController getMarkerId:marker];
-    FLTGoogleMapMarkerController* controller = _markerIdToController[markerId];
+    FLTNaverMapMarkerController* controller = _markerIdToController[markerId];
     if (!controller) {
       continue;
     }
@@ -276,7 +276,7 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
     if (!markerId) {
       continue;
     }
-    FLTGoogleMapMarkerController* controller = _markerIdToController[markerId];
+    FLTNaverMapMarkerController* controller = _markerIdToController[markerId];
     if (!controller) {
       continue;
     }
@@ -288,7 +288,7 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
   if (!markerId) {
     return NO;
   }
-  FLTGoogleMapMarkerController* controller = _markerIdToController[markerId];
+  FLTNaverMapMarkerController* controller = _markerIdToController[markerId];
   if (!controller) {
     return NO;
   }
@@ -299,7 +299,7 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
   if (!markerId) {
     return;
   }
-  FLTGoogleMapMarkerController* controller = _markerIdToController[markerId];
+  FLTNaverMapMarkerController* controller = _markerIdToController[markerId];
   if (!controller) {
     return;
   }
@@ -312,7 +312,7 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
   }
 }
 - (void)showMarkerInfoWindow:(NSString*)markerId result:(FlutterResult)result {
-  FLTGoogleMapMarkerController* controller = _markerIdToController[markerId];
+  FLTNaverMapMarkerController* controller = _markerIdToController[markerId];
   if (controller) {
     [controller showInfoWindow];
     result(nil);
@@ -323,7 +323,7 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
   }
 }
 - (void)hideMarkerInfoWindow:(NSString*)markerId result:(FlutterResult)result {
-  FLTGoogleMapMarkerController* controller = _markerIdToController[markerId];
+  FLTNaverMapMarkerController* controller = _markerIdToController[markerId];
   if (controller) {
     [controller hideInfoWindow];
     result(nil);
@@ -334,7 +334,7 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
   }
 }
 - (void)isMarkerInfoWindowShown:(NSString*)markerId result:(FlutterResult)result {
-  FLTGoogleMapMarkerController* controller = _markerIdToController[markerId];
+  FLTNaverMapMarkerController* controller = _markerIdToController[markerId];
   if (controller) {
     result(@([controller isInfoWindowShown]));
   } else {

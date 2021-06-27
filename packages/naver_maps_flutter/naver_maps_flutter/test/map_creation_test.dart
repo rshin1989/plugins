@@ -24,7 +24,7 @@ void main() {
     NaverMapsFlutterPlatform.instance = platform;
   });
 
-  testWidgets('_webOnlyMapCreationId increments with each GoogleMap widget', (
+  testWidgets('_webOnlyMapCreationId increments with each NaverMap widget', (
     WidgetTester tester,
   ) async {
     // Inject two map widgets...
@@ -54,7 +54,7 @@ void main() {
     expect(platform.createdIds[1], 1);
   });
 
-  testWidgets('Calls platform.dispose when GoogleMap is disposed of', (
+  testWidgets('Calls platform.dispose when NaverMap is disposed of', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(NaverMap(

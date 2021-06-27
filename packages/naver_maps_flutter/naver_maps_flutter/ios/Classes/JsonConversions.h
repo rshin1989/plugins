@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 #import <Flutter/Flutter.h>
-#import <GoogleMaps/GoogleMaps.h>
+#import <NaverMaps/NaverMaps.h>
 
-@interface FLTGoogleMapJsonConversions : NSObject
+@interface FLTNaverMapJsonConversions : NSObject
 + (bool)toBool:(NSNumber*)data;
 + (int)toInt:(NSNumber*)data;
 + (double)toDouble:(NSNumber*)data;

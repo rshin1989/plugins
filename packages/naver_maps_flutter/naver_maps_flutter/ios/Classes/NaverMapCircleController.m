@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "GoogleMapCircleController.h"
+#import "NaverMapCircleController.h"
 #import "JsonConversions.h"
 
-@implementation FLTGoogleMapCircleController {
+@implementation FLTNaverMapCircleController {
   GMSCircle* _circle;
   GMSMapView* _mapView;
 }
@@ -27,7 +27,7 @@
   _circle.map = nil;
 }
 
-#pragma mark - FLTGoogleMapCircleOptionsSink methods
+#pragma mark - FLTNaverMapCircleOptionsSink methods
 
 - (void)setConsumeTapEvents:(BOOL)consumes {
   _circle.tappable = consumes;
@@ -56,21 +56,21 @@
 }
 @end
 
-static int ToInt(NSNumber* data) { return [FLTGoogleMapJsonConversions toInt:data]; }
+static int ToInt(NSNumber* data) { return [FLTNaverMapJsonConversions toInt:data]; }
 
-static BOOL ToBool(NSNumber* data) { return [FLTGoogleMapJsonConversions toBool:data]; }
+static BOOL ToBool(NSNumber* data) { return [FLTNaverMapJsonConversions toBool:data]; }
 
 static CLLocationCoordinate2D ToLocation(NSArray* data) {
-  return [FLTGoogleMapJsonConversions toLocation:data];
+  return [FLTNaverMapJsonConversions toLocation:data];
 }
 
 static CLLocationDistance ToDistance(NSNumber* data) {
-  return [FLTGoogleMapJsonConversions toFloat:data];
+  return [FLTNaverMapJsonConversions toFloat:data];
 }
 
-static UIColor* ToColor(NSNumber* data) { return [FLTGoogleMapJsonConversions toColor:data]; }
+static UIColor* ToColor(NSNumber* data) { return [FLTNaverMapJsonConversions toColor:data]; }
 
-static void InterpretCircleOptions(NSDictionary* data, id<FLTGoogleMapCircleOptionsSink> sink,
+static void InterpretCircleOptions(NSDictionary* data, id<FLTNaverMapCircleOptionsSink> sink,
                                    NSObject<FlutterPluginRegistrar>* registrar) {
   NSNumber* consumeTapEvents = data[@"consumeTapEvents"];
   if (consumeTapEvents != nil) {
@@ -136,8 +136,8 @@ static void InterpretCircleOptions(NSDictionary* data, id<FLTGoogleMapCircleOpti
     CLLocationCoordinate2D position = [FLTCirclesController getPosition:circle];
     CLLocationDistance radius = [FLTCirclesController getRadius:circle];
     NSString* circleId = [FLTCirclesController getCircleId:circle];
-    FLTGoogleMapCircleController* controller =
-        [[FLTGoogleMapCircleController alloc] initCircleWithPosition:position
+    FLTNaverMapCircleController* controller =
+        [[FLTNaverMapCircleController alloc] initCircleWithPosition:position
                                                               radius:radius
                                                             circleId:circleId
                                                              mapView:_mapView];
@@ -148,7 +148,7 @@ static void InterpretCircleOptions(NSDictionary* data, id<FLTGoogleMapCircleOpti
 - (void)changeCircles:(NSArray*)circlesToChange {
   for (NSDictionary* circle in circlesToChange) {
     NSString* circleId = [FLTCirclesController getCircleId:circle];
-    FLTGoogleMapCircleController* controller = _circleIdToController[circleId];
+    FLTNaverMapCircleController* controller = _circleIdToController[circleId];
     if (!controller) {
       continue;
     }
@@ -160,7 +160,7 @@ static void InterpretCircleOptions(NSDictionary* data, id<FLTGoogleMapCircleOpti
     if (!circleId) {
       continue;
     }
-    FLTGoogleMapCircleController* controller = _circleIdToController[circleId];
+    FLTNaverMapCircleController* controller = _circleIdToController[circleId];
     if (!controller) {
       continue;
     }
@@ -178,7 +178,7 @@ static void InterpretCircleOptions(NSDictionary* data, id<FLTGoogleMapCircleOpti
   if (!circleId) {
     return;
   }
-  FLTGoogleMapCircleController* controller = _circleIdToController[circleId];
+  FLTNaverMapCircleController* controller = _circleIdToController[circleId];
   if (!controller) {
     return;
   }

@@ -19,9 +19,9 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.embedding.engine.plugins.lifecycle.FlutterLifecycleAdapter;
 
 /**
- * Plugin for controlling a set of GoogleMap views to be shown as overlays on top of the Flutter
+ * Plugin for controlling a set of NaverMap views to be shown as overlays on top of the Flutter
  * view. The overlay should be hidden during transformations or while Flutter is rendering on top of
- * the map. A Texture drawn using GoogleMap bitmap snapshots can then be shown instead of the
+ * the map. A Texture drawn using NaverMap bitmap snapshots can then be shown instead of the
  * overlay.
  */
 public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {

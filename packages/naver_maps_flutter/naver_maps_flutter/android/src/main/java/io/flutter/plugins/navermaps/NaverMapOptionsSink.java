@@ -8,7 +8,7 @@ import com.naver.maps.geometry.LatLngBounds;
 import java.util.List;
 import java.util.Map;
 
-/** Receiver of GoogleMap configuration options. */
+/** Receiver of NaverMap configuration options. */
 interface NaverMapOptionsSink {
   void setCameraTargetBounds(LatLngBounds bounds);
 

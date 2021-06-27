@@ -3,12 +3,12 @@
 // found in the LICENSE file.
 
 #import <Flutter/Flutter.h>
-#import <GoogleMaps/GoogleMaps.h>
+#import <NMapsMap/NMapsMap.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 // Defines map UI options writable from Flutter.
-@protocol FLTGoogleMapTileOverlayOptionsSink
+@protocol FLTNaverMapTileOverlayOptionsSink
 - (void)setFadeIn:(BOOL)fadeIn;
 - (void)setTransparency:(float)transparency;
 - (void)setZIndex:(int)zIndex;
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setTileSize:(NSInteger)tileSize;
 @end
 
-@interface FLTGoogleMapTileOverlayController : NSObject <FLTGoogleMapTileOverlayOptionsSink>
+@interface FLTNaverMapTileOverlayController : NSObject <FLTNaverMapTileOverlayOptionsSink>
 - (instancetype)initWithTileLayer:(GMSTileLayer *)tileLayer mapView:(GMSMapView *)mapView;
 - (void)removeTileOverlay;
 - (void)clearTileCache;

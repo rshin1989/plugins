@@ -3,13 +3,13 @@
 // found in the LICENSE file.
 
 #import <Flutter/Flutter.h>
-#import <GoogleMaps/GoogleMaps.h>
-#import "GoogleMapController.h"
+#import <NMapsMap/NMapsMap.h>
+#import "NaverMapController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 // Defines marker UI options writable from Flutter.
-@protocol FLTGoogleMapMarkerOptionsSink
+@protocol FLTNaverMapMarkerOptionsSink
 - (void)setAlpha:(float)alpha;
 - (void)setAnchor:(CGPoint)anchor;
 - (void)setConsumeTapEvents:(BOOL)consume;
@@ -25,11 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 // Defines marker controllable by Flutter.
-@interface FLTGoogleMapMarkerController : NSObject <FLTGoogleMapMarkerOptionsSink>
+@interface FLTNaverMapMarkerController : NSObject <FLTNaverMapMarkerOptionsSink>
 @property(atomic, readonly) NSString* markerId;
 - (instancetype)initMarkerWithPosition:(CLLocationCoordinate2D)position
                               markerId:(NSString*)markerId
-                               mapView:(GMSMapView*)mapView;
+                               mapView:(NMFMapView*)mapView;
 - (void)showInfoWindow;
 - (void)hideInfoWindow;
 - (BOOL)isInfoWindowShown;
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FLTMarkersController : NSObject
 - (instancetype)init:(FlutterMethodChannel*)methodChannel
-             mapView:(GMSMapView*)mapView
+             mapView:(NMFMapView*)mapView
            registrar:(NSObject<FlutterPluginRegistrar>*)registrar;
 - (void)addMarkers:(NSArray*)markersToAdd;
 - (void)changeMarkers:(NSArray*)markersToChange;

@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "FLTGoogleMapTileOverlayController.h"
+#import "FLTNaverMapTileOverlayController.h"
 #import "JsonConversions.h"
 
 static void InterpretTileOverlayOptions(NSDictionary* data,
-                                        id<FLTGoogleMapTileOverlayOptionsSink> sink,
+                                        id<FLTNaverMapTileOverlayOptionsSink> sink,
                                         NSObject<FlutterPluginRegistrar>* registrar) {
   NSNumber* visible = data[@"visible"];
   if (visible != nil) {
@@ -34,14 +34,14 @@ static void InterpretTileOverlayOptions(NSDictionary* data,
   }
 }
 
-@interface FLTGoogleMapTileOverlayController ()
+@interface FLTNaverMapTileOverlayController ()
 
 @property(strong, nonatomic) GMSTileLayer* layer;
 @property(weak, nonatomic) GMSMapView* mapView;
 
 @end
 
-@implementation FLTGoogleMapTileOverlayController
+@implementation FLTNaverMapTileOverlayController
 
 - (instancetype)initWithTileLayer:(GMSTileLayer*)tileLayer mapView:(GMSMapView*)mapView {
   self = [super init];
@@ -71,7 +71,7 @@ static void InterpretTileOverlayOptions(NSDictionary* data,
   return info;
 }
 
-#pragma mark - FLTGoogleMapTileOverlayOptionsSink methods
+#pragma mark - FLTNaverMapTileOverlayOptionsSink methods
 
 - (void)setFadeIn:(BOOL)fadeIn {
   self.layer.fadeIn = fadeIn;
@@ -183,8 +183,8 @@ static void InterpretTileOverlayOptions(NSDictionary* data,
     NSString* tileOverlayId = [FLTTileOverlaysController getTileOverlayId:tileOverlay];
     FLTTileProviderController* tileProvider =
         [[FLTTileProviderController alloc] init:self.methodChannel tileOverlayId:tileOverlayId];
-    FLTGoogleMapTileOverlayController* controller =
-        [[FLTGoogleMapTileOverlayController alloc] initWithTileLayer:tileProvider
+    FLTNaverMapTileOverlayController* controller =
+        [[FLTNaverMapTileOverlayController alloc] initWithTileLayer:tileProvider
                                                              mapView:self.mapView];
     InterpretTileOverlayOptions(tileOverlay, controller, self.registrar);
     self.tileOverlayIdToController[tileOverlayId] = controller;
@@ -194,7 +194,7 @@ static void InterpretTileOverlayOptions(NSDictionary* data,
 - (void)changeTileOverlays:(NSArray*)tileOverlaysToChange {
   for (NSDictionary* tileOverlay in tileOverlaysToChange) {
     NSString* tileOverlayId = [FLTTileOverlaysController getTileOverlayId:tileOverlay];
-    FLTGoogleMapTileOverlayController* controller = self.tileOverlayIdToController[tileOverlayId];
+    FLTNaverMapTileOverlayController* controller = self.tileOverlayIdToController[tileOverlayId];
     if (!controller) {
       continue;
     }
@@ -203,7 +203,7 @@ static void InterpretTileOverlayOptions(NSDictionary* data,
 }
 - (void)removeTileOverlayIds:(NSArray*)tileOverlayIdsToRemove {
   for (NSString* tileOverlayId in tileOverlayIdsToRemove) {
-    FLTGoogleMapTileOverlayController* controller = self.tileOverlayIdToController[tileOverlayId];
+    FLTNaverMapTileOverlayController* controller = self.tileOverlayIdToController[tileOverlayId];
     if (!controller) {
       continue;
     }
@@ -213,7 +213,7 @@ static void InterpretTileOverlayOptions(NSDictionary* data,
 }
 
 - (void)clearTileCache:(NSString*)tileOverlayId {
-  FLTGoogleMapTileOverlayController* controller = self.tileOverlayIdToController[tileOverlayId];
+  FLTNaverMapTileOverlayController* controller = self.tileOverlayIdToController[tileOverlayId];
   if (!controller) {
     return;
   }

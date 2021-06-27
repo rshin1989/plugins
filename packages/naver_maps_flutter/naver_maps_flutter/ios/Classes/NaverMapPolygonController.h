@@ -3,10 +3,10 @@
 // found in the LICENSE file.
 
 #import <Flutter/Flutter.h>
-#import <GoogleMaps/GoogleMaps.h>
+#import <NMapsMap/NMapsMap.h>
 
 // Defines polygon UI options writable from Flutter.
-@protocol FLTGoogleMapPolygonOptionsSink
+@protocol FLTNaverMapPolygonOptionsSink
 - (void)setConsumeTapEvents:(BOOL)consume;
 - (void)setVisible:(BOOL)visible;
 - (void)setFillColor:(UIColor*)color;
@@ -18,17 +18,17 @@
 @end
 
 // Defines polygon controllable by Flutter.
-@interface FLTGoogleMapPolygonController : NSObject <FLTGoogleMapPolygonOptionsSink>
+@interface FLTNaverMapPolygonController : NSObject <FLTNaverMapPolygonOptionsSink>
 @property(atomic, readonly) NSString* polygonId;
-- (instancetype)initPolygonWithPath:(GMSMutablePath*)path
+- (instancetype)initPolygonWithPath:(NMFPath*)path
                           polygonId:(NSString*)polygonId
-                            mapView:(GMSMapView*)mapView;
+                            mapView:(NMFMapView*)mapView;
 - (void)removePolygon;
 @end
 
 @interface FLTPolygonsController : NSObject
 - (instancetype)init:(FlutterMethodChannel*)methodChannel
-             mapView:(GMSMapView*)mapView
+             mapView:(NMFMapView*)mapView
            registrar:(NSObject<FlutterPluginRegistrar>*)registrar;
 - (void)addPolygons:(NSArray*)polygonsToAdd;
 - (void)changePolygons:(NSArray*)polygonsToChange;
