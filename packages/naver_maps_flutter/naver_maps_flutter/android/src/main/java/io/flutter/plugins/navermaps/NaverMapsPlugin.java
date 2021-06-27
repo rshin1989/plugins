@@ -7,12 +7,18 @@ package io.flutter.plugins.navermaps;
 import android.app.Activity;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Lifecycle.Event;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
+
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.util.FusedLocationSource;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -67,6 +73,7 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
   @Override
   public void onAttachedToEngine(FlutterPluginBinding binding) {
+      Log.d("NaverMap", "onAttachedToEngine()");
     binding
         .getPlatformViewRegistry()
         .registerViewFactory(
@@ -83,27 +90,39 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
   }
 
   @Override
-  public void onDetachedFromEngine(FlutterPluginBinding binding) {}
+  public void onDetachedFromEngine(FlutterPluginBinding binding) {
+      Log.d("NaverMap", "onDetachedFromEngine()");
+  }
 
   // ActivityAware
 
   @Override
   public void onAttachedToActivity(ActivityPluginBinding binding) {
+      Log.d("NaverMap", "onAttachedToActivity()");
+
+      Log.d("NaverMap", "로케이션 소스를 생성합니다.");
+      if (NaverMapController.locationSource == null) {
+        NaverMapController.locationSource = new FusedLocationSource(binding.getActivity(), NaverMapController.LOCATION_PERMISSION_REQUEST_CODE);
+      }
+
     lifecycle = FlutterLifecycleAdapter.getActivityLifecycle(binding);
   }
 
   @Override
   public void onDetachedFromActivity() {
+      Log.d("NaverMap", "onDetachedFromActivity()");
     lifecycle = null;
   }
 
   @Override
   public void onReattachedToActivityForConfigChanges(ActivityPluginBinding binding) {
+      Log.d("NaverMap", "onReattachedToActivityForConfigChanges()");
     onAttachedToActivity(binding);
   }
 
   @Override
   public void onDetachedFromActivityForConfigChanges() {
+      Log.d("NaverMap", "onReattachedToActivityForConfigChanges()");
     onDetachedFromActivity();
   }
 
@@ -126,6 +145,7 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        Log.d("NaverMap", "onActivityCreated()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
@@ -134,6 +154,7 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityStarted(Activity activity) {
+        Log.d("NaverMap", "onActivityStarted()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
@@ -142,6 +163,7 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityResumed(Activity activity) {
+        Log.d("NaverMap", "onActivityResumed()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
@@ -150,6 +172,7 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityPaused(Activity activity) {
+        Log.d("NaverMap", "onActivityPaused()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
@@ -158,6 +181,7 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityStopped(Activity activity) {
+        Log.d("NaverMap", "onActivityStopped()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
@@ -169,11 +193,14 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityDestroyed(Activity activity) {
+        Log.d("NaverMap", "onActivityDestroyed()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
       activity.getApplication().unregisterActivityLifecycleCallbacks(this);
       lifecycle.handleLifecycleEvent(Event.ON_DESTROY);
+
+
     }
 
     @NonNull

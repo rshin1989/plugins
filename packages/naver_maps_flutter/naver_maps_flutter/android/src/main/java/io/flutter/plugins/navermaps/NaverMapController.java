@@ -14,6 +14,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ import com.naver.maps.geometry.LatLngBounds;
 import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
+import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapView;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.NaverMapOptions;
@@ -34,6 +36,7 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.Symbol;
 import com.naver.maps.map.indoor.IndoorSelection;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.model.Circle;
 import com.naver.maps.model.Polygon;
 import com.naver.maps.model.Polyline;
@@ -94,6 +97,10 @@ final class NaverMapController
     private List<Object> initialCircles;
     private List<Map<String, ?>> initialTileOverlays;
 
+    // For my location
+    public static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+    public static FusedLocationSource locationSource;
+
     NaverMapController(
             int id,
             Context context,
@@ -142,9 +149,15 @@ final class NaverMapController
     public void onMapReady(NaverMap naverMap) {
         Log.d("NaverMap", "onMapReady: " + naverMap);
         this.naverMap = naverMap;
+
+        // Map Layer Initialize
         this.naverMap.setIndoorEnabled(this.indoorEnabled);
-        this.naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_TRAFFIC, this.trafficEnabled);
         this.naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_BUILDING, this.buildingsEnabled);
+        this.naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_TRANSIT, this.trafficEnabled);
+        this.naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_BICYCLE, this.trafficEnabled);
+        this.naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_TRAFFIC, this.trafficEnabled);
+        this.naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_CADASTRAL, this.trafficEnabled);
+        this.naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_MOUNTAIN, this.buildingsEnabled);
         //TODO("마커의 정보창을 출력해주는 형태만 지원한다")
         //naverMap.setOnInfoWindowClickListener(this);
         if (mapReadyResult != null) {
@@ -612,8 +625,8 @@ final class NaverMapController
 
     @Override
     public void setCameraTargetBounds(LatLngBounds bounds) {
-        //TODO("setCameraTargetBounds")
-//    naverMap.setLatLngBoundsForCameraTarget(bounds);
+      CameraUpdate cameraUpdate = CameraUpdate.fitBounds(bounds);
+      naverMap.moveCamera(cameraUpdate);
     }
 
     @Override
@@ -812,11 +825,19 @@ final class NaverMapController
             // Gradle is doing a static check for missing permission and in some configurations will
             // fail the build if the permission is missing. The following disables the Gradle lint.
             //noinspection ResourceType
-//      naverMap.setMyLocationEnabled(myLocationEnabled);
-//      naverMap.getUiSettings().setMyLocationButtonEnabled(myLocationButtonEnabled);
+            this.naverMap.setLocationSource(locationSource);
+            this.naverMap.getUiSettings().setLocationButtonEnabled(myLocationButtonEnabled);
+
+            if (!myLocationButtonEnabled) {
+                return;
+            }
+
+            if (!myLocationEnabled) {
+                this.naverMap.setLocationTrackingMode(LocationTrackingMode.None);
+            } else {
+                this.naverMap.setLocationTrackingMode(LocationTrackingMode.Face);
+            }
         } else {
-            // TODO(amirh): Make the options update fail.
-            // https://github.com/flutter/flutter/issues/24327
             Log.e(TAG, "Cannot enable MyLocation layer as location permissions are not granted");
         }
     }
