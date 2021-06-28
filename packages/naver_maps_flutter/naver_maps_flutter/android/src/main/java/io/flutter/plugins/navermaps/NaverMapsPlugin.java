@@ -101,9 +101,9 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
       Log.d("NaverMap", "onAttachedToActivity()");
 
       Log.d("NaverMap", "로케이션 소스를 생성합니다.");
-      if (NaverMapController.locationSource == null) {
-        NaverMapController.locationSource = new FusedLocationSource(binding.getActivity(), NaverMapController.LOCATION_PERMISSION_REQUEST_CODE);
-      }
+//      if (NaverMapController.locationSource == null) {
+//        NaverMapController.locationSource = new FusedLocationSource(binding.getActivity(), NaverMapController.LOCATION_PERMISSION_REQUEST_CODE);
+//      }
 
     lifecycle = FlutterLifecycleAdapter.getActivityLifecycle(binding);
   }

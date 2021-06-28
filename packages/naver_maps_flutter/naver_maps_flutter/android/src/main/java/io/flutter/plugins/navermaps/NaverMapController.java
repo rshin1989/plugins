@@ -825,18 +825,18 @@ final class NaverMapController
             // Gradle is doing a static check for missing permission and in some configurations will
             // fail the build if the permission is missing. The following disables the Gradle lint.
             //noinspection ResourceType
-            this.naverMap.setLocationSource(locationSource);
+//            this.naverMap.setLocationSource(locationSource);
             this.naverMap.getUiSettings().setLocationButtonEnabled(myLocationButtonEnabled);
 
             if (!myLocationButtonEnabled) {
                 return;
             }
 
-            if (!myLocationEnabled) {
-                this.naverMap.setLocationTrackingMode(LocationTrackingMode.None);
-            } else {
-                this.naverMap.setLocationTrackingMode(LocationTrackingMode.Face);
-            }
+//            if (!myLocationEnabled) {
+//                this.naverMap.setLocationTrackingMode(LocationTrackingMode.None);
+//            } else {
+//                this.naverMap.setLocationTrackingMode(LocationTrackingMode.Face);
+//            }
         } else {
             Log.e(TAG, "Cannot enable MyLocation layer as location permissions are not granted");
         }
