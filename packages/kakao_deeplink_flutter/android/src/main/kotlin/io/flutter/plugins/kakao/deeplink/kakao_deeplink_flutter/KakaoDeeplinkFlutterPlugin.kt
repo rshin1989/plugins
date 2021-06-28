@@ -51,7 +51,7 @@ class KakaoDeeplinkFlutterPlugin: FlutterPlugin, MethodCallHandler {
 
         // 카카오내비 앱으로 길안내
         startActivity(context, NaviClient.instance.navigateIntent(
-            Location(placeName, latitude, longitude),
+            Location(placeName, longitude, latitude),
             NaviOption(coordType = CoordType.WGS84)
           ), null)
       }
