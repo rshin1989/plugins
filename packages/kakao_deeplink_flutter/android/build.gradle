@@ -18,6 +18,7 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
 
@@ -31,10 +32,25 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "com.kakao.sdk:v2-user:2.5.2" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-talk:2.5.2" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-story:2.5.2" // 카카오스토리
+    implementation "com.kakao.sdk:v2-link:2.5.2" // 메시지(카카오링크)
+    implementation "com.kakao.sdk:v2-navi:2.5.2" // 카카오내비
 }
