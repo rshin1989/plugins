@@ -287,7 +287,6 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
   @override
   Widget build(BuildContext context) {
     final MarkerId? selectedId = selectedMarker;
-    print('markers.values: ${markers.values.toString()}');
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.stretch,

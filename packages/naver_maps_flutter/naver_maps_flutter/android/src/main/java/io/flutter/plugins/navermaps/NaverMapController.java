@@ -147,7 +147,6 @@ final class NaverMapController
 
     @Override
     public void onMapReady(NaverMap naverMap) {
-        Log.d("NaverMap", "onMapReady: " + naverMap);
         this.naverMap = naverMap;
 
         // Map Layer Initialize
@@ -180,7 +179,6 @@ final class NaverMapController
 
     @Override
     public void onMethodCall(MethodCall call, MethodChannel.Result result) {
-        Log.d("NaverMap", "onMethodCall: " + call.method);
         switch (call.method) {
             case "map#waitForMap":
                 if (naverMap != null) {
@@ -267,13 +265,10 @@ final class NaverMapController
             }
             case "markers#update": {
                 List<Object> markersToAdd = call.argument("markersToAdd");
-                Log.d("NaverMap", "markers#update, markersToAdd:" + markersToAdd.size());
                 markersController.addMarkers(markersToAdd);
                 List<Object> markersToChange = call.argument("markersToChange");
-                Log.d("NaverMap", "markers#update, markersToChange:" + markersToChange.size());
                 markersController.changeMarkers(markersToChange);
                 List<Object> markerIdsToRemove = call.argument("markerIdsToRemove");
-                Log.d("NaverMap", "markers#update, markerIdsToRemove:" + markerIdsToRemove.size());
                 markersController.removeMarkers(markerIdsToRemove);
                 result.success(null);
                 break;

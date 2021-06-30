@@ -92,7 +92,6 @@ class MarkerIconsBodyState extends State<MarkerIconsBody> {
     // where 32 is your SVG's original width
     double width = 32 * devicePixelRatio;
     double height = 32 * devicePixelRatio; // same thing
-    print('width: $width, height: $height');
 
     // Convert to ui.Picture
     ui.Picture picture = svgDrawableRoot.toPicture(size: Size(width, height));

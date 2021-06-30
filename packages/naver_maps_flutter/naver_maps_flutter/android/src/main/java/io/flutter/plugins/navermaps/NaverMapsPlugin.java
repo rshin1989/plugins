@@ -73,7 +73,6 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
   @Override
   public void onAttachedToEngine(FlutterPluginBinding binding) {
-      Log.d("NaverMap", "onAttachedToEngine()");
     binding
         .getPlatformViewRegistry()
         .registerViewFactory(
@@ -91,16 +90,12 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
   @Override
   public void onDetachedFromEngine(FlutterPluginBinding binding) {
-      Log.d("NaverMap", "onDetachedFromEngine()");
   }
 
   // ActivityAware
 
   @Override
   public void onAttachedToActivity(ActivityPluginBinding binding) {
-      Log.d("NaverMap", "onAttachedToActivity()");
-
-      Log.d("NaverMap", "로케이션 소스를 생성합니다.");
 //      if (NaverMapController.locationSource == null) {
 //        NaverMapController.locationSource = new FusedLocationSource(binding.getActivity(), NaverMapController.LOCATION_PERMISSION_REQUEST_CODE);
 //      }
@@ -110,19 +105,16 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
   @Override
   public void onDetachedFromActivity() {
-      Log.d("NaverMap", "onDetachedFromActivity()");
     lifecycle = null;
   }
 
   @Override
   public void onReattachedToActivityForConfigChanges(ActivityPluginBinding binding) {
-      Log.d("NaverMap", "onReattachedToActivityForConfigChanges()");
     onAttachedToActivity(binding);
   }
 
   @Override
   public void onDetachedFromActivityForConfigChanges() {
-      Log.d("NaverMap", "onReattachedToActivityForConfigChanges()");
     onDetachedFromActivity();
   }
 
@@ -145,7 +137,6 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        Log.d("NaverMap", "onActivityCreated()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
@@ -154,7 +145,6 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityStarted(Activity activity) {
-        Log.d("NaverMap", "onActivityStarted()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
@@ -163,7 +153,6 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityResumed(Activity activity) {
-        Log.d("NaverMap", "onActivityResumed()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
@@ -172,7 +161,6 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityPaused(Activity activity) {
-        Log.d("NaverMap", "onActivityPaused()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
@@ -181,7 +169,6 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityStopped(Activity activity) {
-        Log.d("NaverMap", "onActivityStopped()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
@@ -193,7 +180,6 @@ public class NaverMapsPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        Log.d("NaverMap", "onActivityDestroyed()");
       if (activity.hashCode() != registrarActivityHashCode) {
         return;
       }
