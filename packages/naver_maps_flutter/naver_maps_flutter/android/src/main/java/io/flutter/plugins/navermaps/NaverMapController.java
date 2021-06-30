@@ -625,6 +625,9 @@ final class NaverMapController
 
     @Override
     public void setCameraTargetBounds(LatLngBounds bounds) {
+      if (bounds == null) {
+        return;
+      }
       CameraUpdate cameraUpdate = CameraUpdate.fitBounds(bounds);
       naverMap.moveCamera(cameraUpdate);
     }
