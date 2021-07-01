@@ -179,6 +179,7 @@ final class NaverMapController
 
     @Override
     public void onMethodCall(MethodCall call, MethodChannel.Result result) {
+        Log.d("NaverMapController", "call.method: " + call.method + ", " + call.arguments);
         switch (call.method) {
             case "map#waitForMap":
                 if (naverMap != null) {
