@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -92,6 +93,7 @@ class MarkerController implements MarkerOptionsSink {
   @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void setIcon(BitmapDescriptor bitmapDescriptor) {
+    Log.d("MarkerController", "<setIcon>-------");
     if (bitmapDescriptor == null) {
       return;
     }

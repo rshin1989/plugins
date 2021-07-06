@@ -10,6 +10,8 @@ import android.util.Log;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.OverlayImage;
+import com.naver.maps.model.BitmapDescriptor;
 import com.naver.maps.model.MarkerOptions;
 
 import io.flutter.plugin.common.MethodChannel;
@@ -148,6 +150,14 @@ class MarkersController {
     private void addMarker(String markerId, MarkerOptions markerOptions, boolean consumeTapEvents) {
         final Marker marker = new Marker();
         marker.setPosition(markerOptions.getPosition());
+        BitmapDescriptor bitmapDescriptor = markerOptions.getIcon();
+        if (bitmapDescriptor != null) {
+            OverlayImage overlayImage = bitmapDescriptor.toOverlayImage(context);
+            if (overlayImage == null) {
+                return;
+            }
+            marker.setIcon(overlayImage);
+        }
         marker.setMap(naverMap);
 
         String naverMarkerId = Integer.toString(marker.hashCode());

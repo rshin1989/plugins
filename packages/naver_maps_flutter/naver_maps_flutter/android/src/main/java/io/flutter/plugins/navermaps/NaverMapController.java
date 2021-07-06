@@ -107,6 +107,7 @@ final class NaverMapController
             BinaryMessenger binaryMessenger,
             LifecycleProvider lifecycleProvider,
             NaverMapOptions options) {
+        Log.d("NaverMapController", "id:" + id);
         this.id = id;
         this.context = context;
         this.options = options;
@@ -147,6 +148,7 @@ final class NaverMapController
 
     @Override
     public void onMapReady(NaverMap naverMap) {
+        Log.d("NaverMapController", "onMapReady");
         this.naverMap = naverMap;
 
         // Map Layer Initialize
@@ -554,6 +556,7 @@ final class NaverMapController
 
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
+        Log.d("NaverMapController", "------- onCreate");
         if (disposed) {
             return;
         }
@@ -562,6 +565,7 @@ final class NaverMapController
 
     @Override
     public void onStart(@NonNull LifecycleOwner owner) {
+        Log.d("NaverMapController", "------- onStart");
         if (disposed) {
             return;
         }
@@ -570,6 +574,7 @@ final class NaverMapController
 
     @Override
     public void onResume(@NonNull LifecycleOwner owner) {
+        Log.d("NaverMapController", "------- onResume");
         if (disposed) {
             return;
         }
@@ -578,6 +583,7 @@ final class NaverMapController
 
     @Override
     public void onPause(@NonNull LifecycleOwner owner) {
+        Log.d("NaverMapController", "------- onPause");
         if (disposed) {
             return;
         }
@@ -586,6 +592,7 @@ final class NaverMapController
 
     @Override
     public void onStop(@NonNull LifecycleOwner owner) {
+        Log.d("NaverMapController", "------- onStop");
         if (disposed) {
             return;
         }
@@ -594,6 +601,7 @@ final class NaverMapController
 
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
+        Log.d("NaverMapController", "------- onDestroy");
         owner.getLifecycle().removeObserver(this);
         if (disposed) {
             return;
@@ -603,6 +611,7 @@ final class NaverMapController
 
     @Override
     public void onRestoreInstanceState(Bundle bundle) {
+        Log.d("NaverMapController", "------- onRestoreInstanceState");
         if (disposed) {
             return;
         }

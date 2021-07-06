@@ -37,27 +37,36 @@ class MarkerIconsBodyState extends State<MarkerIconsBody> {
 
   @override
   Widget build(BuildContext context) {
-    _createMarkerImageFromAsset(context);
     // _createMarkerImageFromSvgAsset(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Center(
-          child: SizedBox(
-            width: 350.0,
-            height: 300.0,
-            child: NaverMap(
-              initialCameraPosition: const CameraPosition(
-                target: _kMapCenter,
-                zoom: 7.0,
+    return FutureBuilder(
+      future: _createMarkerImageFromAsset(context),
+      builder: (context, snapshot) {
+        List<Marker> markers = [];
+        if (snapshot.connectionState == ConnectionState.done) {
+          markers.add(_createMarker());
+        }
+
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Center(
+              child: SizedBox(
+                width: 350.0,
+                height: 300.0,
+                child: NaverMap(
+                  initialCameraPosition: const CameraPosition(
+                    target: _kMapCenter,
+                    zoom: 7.0,
+                  ),
+                  markers: markers.toSet(),
+                  onMapCreated: _onMapCreated,
+                ),
               ),
-              markers: <Marker>{_createMarker()},
-              onMapCreated: _onMapCreated,
-            ),
-          ),
-        )
-      ],
+            )
+          ],
+        );
+      },
     );
   }
 
